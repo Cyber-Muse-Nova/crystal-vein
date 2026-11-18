@@ -247,6 +247,7 @@ p{color:var(--mist)}
   padding:12px 20px;border-radius:999px;background:rgba(30,16,52,.92);border:1px solid var(--edge);color:var(--pearl);font-size:14px;transition:all .3s ease;pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
+.portrait-deep{display:grid;gap:12px;margin-top:18px}.portrait-unit{padding:24px}.portrait-unit h3{font-size:18px;color:var(--pearl);margin-bottom:10px}.portrait-unit p{font-size:15px;line-height:1.95}@media(min-width:640px){.portrait-deep{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* atlas */
 .atlas-entry{margin-top:20px}
 .back{display:inline-block;margin-bottom:22px}
@@ -429,6 +430,7 @@ p{color:var(--mist)}
     <div id="vernote"></div>
     <div id="crisis"></div>
     <div id="context"></div>
+    <div class="sect" id="portrait-sect"><h2>深读你的晶体</h2><p>让数字回到真实的情绪、关系和生活情境里。</p><div class="portrait-deep" id="portrait-deep"></div></div>
 
     <div class="sect" id="profile-sect">
       <h2>整体画像</h2>
@@ -902,7 +904,7 @@ function scoreModule(m){
     return {m,crits,supp,hits,pct,state,ruleText,sub:`注意缺陷 ${ia}/9，多动冲动 ${hi}/9`,...extra};
   }
   state=hits>=m.need?"high":(hits>=m.need-2||pct>=.5)?"mid":"low";
-  ruleText=`符合 ${hits} / ${m.th} 条。DSM-5 的诊断线是 ${m.need} 条。`;
+  ruleText=`符合 ${hits} / ${m.th} 条。DSM-5 所列条目数量的参考门槛是 ${m.need} 条。`;
   if(m.id==="aspd")ruleText+=" 另外还要求十五岁前已有品行障碍。";
   return {m,crits,supp,hits,pct,state,ruleText,sub:`符合 ${hits} / ${m.th} 条，筛查线 ${m.need} 条`};
 }
@@ -1136,15 +1138,49 @@ document.addEventListener("keydown",e=>{
 });
 
 /* ============ result ============ */
+function describePortrait(R){
+  const scored=R.filter(x=>!x.none).sort((a,b)=>(b.state==="high")-(a.state==="high")||(b.state==="mid")-(a.state==="mid")||b.pct-a.pct);
+  if(!scored.length)return {summary:"没有可分析的回答。",parts:[]};
+  const active=scored.filter(x=>x.state!=="low"),top=(active.length?active:scored).slice(0,3);
+  const short=S.ver==="short",first=top[0],second=top[1],high=scored.filter(x=>x.state==="high").length;
+  const names=top.map(x=>`“${x.m.zh}”`).join("、");
+  const clusters=Object.keys(CLUSTERS).map(k=>{const x=scored.filter(r=>r.m.cluster===k);return {k,v:x.length?x.reduce((s,r)=>s+r.pct,0)/x.length:null}}).filter(x=>x.v!==null).sort((a,b)=>b.v-a.v);
+  const clusterNames={A:"人际信任与距离",B:"情绪、自我评价与关系",C:"焦虑和安全感",N:"注意力、感官与社交信息的处理"};
+  const ctext=clusters.length<2?"此次选择的类别不足以比较各个分群。":clusters[0].v-clusters[1].v<.08?"不同分群相对均衡，并不能用一个单一类型概括你。":`在已测试的类别中，${clusterNames[clusters[0].k]}相关的回答相对更突出。`;
+  const pair=COMBOS.find(([a,b])=>active.some(r=>r.m.id===a)&&active.some(r=>r.m.id===b));
+  const ptext=pair?`“${MOD[pair[0]].zh}”与“${MOD[pair[1]].zh}”同时较亮，两者可能有部分表现重叠，但需要结合具体经历区分。`:active.length>1?"多条脉络可能指向相似体验，也可能由不同原因产生。":"更值得留意的是具体情境，而不是给自己贴上某个标签。";
+  const g=k=>S.ans[k],ctx=[];
+  if(g("g1")>=3)ctx.push("这些特点自述已持续多年");
+  else if(g("g1")!==undefined&&g("g1")<=1)ctx.push("这些特点自述主要发生在近期");
+  if(g("g2")>=3||g("g3")>=3)ctx.push("它们已造成一定痛苦或生活影响");
+  else if(g("g2")!==undefined&&g("g3")!==undefined&&g("g2")<=1&&g("g3")<=1)ctx.push("目前没有报告明显痛苦或功能损害");
+  if(g("g4")>=3)ctx.push("近期压力也需要考虑");
+  const intro=active.length?`本次${short?"简化版":""}自评中，最鲜明的脉络是${names}。${short?"简化版只展示核心倾向，不能与完整诊断标准逐项对照。":high?`其中 ${high} 种达到了条目数量参考门槛，但这不等于临床诊断。`:"它们有一定相似之处，但未达到条目数量参考门槛。"}`:`本次没有明显达到或接近参考门槛的模式，相对较高的是${names}，但整体强度仍然较低。`;
+  const summary=`${intro}${ctext}${ptext}${ctx.length?ctx.join("；")+"。":"表现持续多久、是否影响生活仍需结合经历判断。"}这份晶体描述的是你的自评体验，而不是对整个人的定论。${scored.length<MODULES.length?"未选择的类别不在本次结论范围内。":""}`;
+  const examples=r=>r.crits.filter(c=>c.mean>=1.75).sort((a,b)=>b.mean-a.mean).slice(0,2).map(c=>`“${c.label}”`).join("、");
+  const strongest=`在${first.m.zh}这一侧，平均自评强度为 ${Math.round(first.pct*100)}%，${first.hits} / ${first.crits.length} 条比较明显。${examples(first)?`相对突出的是${examples(first)}。`:"没有特别突出的单一条目。"}${second?`其次是${second.m.zh}（${Math.round(second.pct*100)}%）${examples(second)?`，其中${examples(second)}更明显`:""}。`:""}这里的百分比只是本问卷的作答强度，不是患病概率或人群百分位。`;
+  const overlap=pair?`${pair[2]}不过，这只是两种模式的比较线索，不能凭同时得分较高就断定两种状况并存；要进一步看反应的触发因素、起始时间及环境。`:active.length>1?"有时不同类别共享紧张、敏感、回避或冲动等表现。试着回顾一次真实事件：当时的想法、感受、行动分别是什么？它们是否真的彼此相关？":"目前没有足够突出的模式组合。先观察最明显的具体条目在什么情境出现、持续多久、能否随环境灵活改变。";
+  const lenses={A:"与人保持距离时，是因为不信任、疲惫，还是确实偏好独处？",B:"情绪最强烈之前，发生了什么事？",C:"回避或试图控制局面时，最担心失去的是什么？",N:"这些注意力、感官或社交上的差异，童年时是否也存在？"};
+  const daily=`尝试连续一周做简短记录：事件、念头、情绪强度、行为和后果。${[...new Set(top.map(r=>r.m.cluster))].map(k=>lenses[k]).join(" ")}这样能把抽象分数转化成具体线索。`;
+  const impact=g("g2")>=3||g("g3")>=3?"你报告的困扰或功能影响本身就值得重视，即使没有达到参考门槛，也值得咨询专业人士。":g("g2")!==undefined&&g("g3")!==undefined&&g("g2")<=1&&g("g3")<=1?"你没有报告明显的痛苦或功能损害；拥有某些特质与存在临床意义上的障碍是两回事。":"还需要了解这些特点是否长期存在、跨多个场合出现并影响学习、工作或关系。";
+  const limits=`${impact}${active.some(r=>r.m.cluster==="N")?"自闭症谱系与 ADHD 属于神经发育状况，评估还需童年发展史与跨场合表现。":""}${short?"简化版尤其不能用于推断诊断标准是否满足。":""}情绪、压力和睡眠也会影响自评。`;
+  return {summary,parts:[["最显著的具体信号",strongest],["不同脉络如何交织",overlap],["它在日常生活中是什么样",daily],["哪些问题还需要核实",limits]]};
+}
+function nuance(r){
+ const a=r.crits.filter(c=>c.mean>=2.5).sort((x,y)=>y.mean-x.mean);
+ const b=r.crits.filter(c=>c.mean<=1.25).sort((x,y)=>x.mean-y.mean);
+ if(a.length&&b.length)return `你对“${a[0].label}”的认同较高，但“${b[0].label}”相对不符合。说明同一类别里不同特点的强弱并不一致，不能用整个类别的刻板印象概括自己。`;
+ if(a.length>=2)return `你的回答较集中于“${a[0].label}”和“${a[1].label}”。可以观察这两种体验是否由相同事件触发。`;
+ if(b.length>=2)return `“${b[0].label}”和“${b[1].label}”都相对不符合，提示这类描述并不完整地适用于你。`;
+ return "";
+}
 function renderResult(){
   show("s-result");
   const R=MODULES.map(scoreModule);
+  const portrait=describePortrait(R);
   $("res-crystal").innerHTML=crystal(R.map(r=>({v:r.none?null:r.pct,state:r.none?null:r.state,label:r.m.abbr})),{size:"res",grow:true,labels:true});
   const tested=R.filter(r=>!r.none).sort((a,b)=>(b.state==="high")-(a.state==="high")||(b.state==="mid")-(a.state==="mid")||b.pct-a.pct);
-  const bright=tested.filter(r=>r.state!=="low").slice(0,3);
-  $("summary").textContent=bright.length
-    ?`发光最亮的脉络是${bright.map(r=>`“${r.m.zh}”`).join("、")}。${S.ver==="short"?"简化版只能看出倾向，想确认可以做完整版。":tested.filter(r=>r.state==="high").length?"其中有达到筛查线的部分，值得认真看一看。":"它们接近筛查线，但都没有达到。"}`
-    :"所有脉络都比较微弱，没有哪一种模式接近筛查线。";
+  $("summary").textContent=portrait.summary;
 
   $("lg-h").textContent=S.ver==="short"?"倾向明显":"达到筛查线";$("lg-m").textContent=S.ver==="short"?"有一定倾向":"接近筛查线";
   $("vernote").innerHTML=S.ver==="short"?`<div class="glass ctx vnote"><h3>这是简化版的结果</h3><p>每种模式只问了最核心的几条，适合快速看看大致倾向。想逐条对照 DSM-5 的诊断线，可以再做一次完整版，这次选择的模式会保留。</p><button type="button" class="ghost" id="to-full">做完整版</button></div>`:"";
@@ -1166,6 +1202,7 @@ function renderResult(){
   if(g("g4")>=3)ctx.push("你正处在一段艰难的时期。这会让很多条目的回答偏高，尤其是情绪不稳定、回避和依赖相关的部分。过几个月状态平稳一些时再测一次，对比会更准确。");
   $("context").innerHTML=ctx.length?`<div class="glass ctx"><h3>结合你的背景来看</h3><ul>${ctx.map(t=>`<li>${t}</li>`).join("")}</ul></div>`:"";
 
+  $("portrait-deep").innerHTML=portrait.parts.map(([h,p])=>`<article class="glass portrait-unit"><h3>${h}</h3><p>${p}</p></article>`).join("");
   // modules
   $("mods-note").textContent=S.ver==="short"
     ?"先按结果、再按强度排列。简化版里，每一颗珍珠是一条被问到的核心标准，亮起的是你回答“比较像我”或“非常像我”的那几条。点开可以看到具体内容。"
@@ -1213,18 +1250,18 @@ function analyze(r){
       :r.state==="mid"?`简化版问了${m.zh}里最核心的 ${n} 条标准，你有 ${r.hits} 条明确符合，整体强度 ${P}%，有一定的倾向，但不算突出。`
       :`简化版问了${m.zh}里最核心的 ${n} 条标准，整体强度 ${P}%，这条脉络在你身上比较微弱。`);
   }else if(m.rule==="asd"){
-    out.push(r.state==="high"?`社交沟通的三条你全部符合，重复与刻板的四条里符合了 ${r.b} 条，达到了 DSM-5 描述的模式。这说明在你的自我描述里，自闭特质相当明显；不过正式判断还需要确认它们从童年早期就已存在。`
+    out.push(r.state==="high"?`社交沟通的三条你全部符合，重复与刻板的四条里符合了 ${r.b} 条，达到问卷按 DSM-5 条目数整理的参考条件。这说明在你的自我描述里，自闭特质相当明显；不过正式判断还需要确认它们从童年早期就已存在。`
       :r.state==="mid"?`社交沟通符合 ${r.a} / 3 条，重复与刻板符合 ${r.b} / 4 条，整体强度 ${P}%。部分特点比较明显，但没有完全达到 DSM-5 的要求：社交三条全部符合，加上刻板至少两条。`
       :`社交沟通符合 ${r.a} / 3 条，重复与刻板符合 ${r.b} / 4 条，整体强度 ${P}%，自闭特质在你身上比较微弱。`);
     if(r.state!=="low"&&r.a<r.b)out.push("你在“重复与刻板”这一侧比“社交沟通”更亮。强烈的兴趣和对固定方式的偏好，单独出现时也可能只是你的个性，不一定指向自闭谱系。");
     if(r.state!=="low"&&r.a>r.b)out.push("你在“社交沟通”这一侧比“重复与刻板”更亮。社交上的吃力也可能来自焦虑、缺乏练习或者长期的被排斥，值得和其他几条脉络对照着看。");
   }else if(m.rule==="adhd"){
-    out.push(r.state==="high"?`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条${r.type}，达到了成人的筛查线（任一方面五条）。`
+    out.push(r.state==="high"?`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条${r.type}，达到了成人相应症状数量的参考门槛（任一方面五条）。`
       :r.state==="mid"?`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条，整体强度 ${P}%，接近成人的筛查线（任一方面五条），但没有达到。`
       :`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条，整体强度 ${P}%，这条脉络在你身上比较微弱。`);
   }else{
-    out.push(r.state==="high"?`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，达到了 DSM-5 的诊断线（${m.need} 条），整体强度 ${P}%。在你的自我描述里，这种模式相当突出。不过问卷只是起点，是否构成“障碍”，还取决于它是不是长期、普遍，并且给你带来了明显的痛苦或损害。`
-      :r.state==="mid"?`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，离诊断线（${m.need} 条）还差 ${Math.max(1,m.need-r.hits)} 条，整体强度 ${P}%。它没有达到筛查线，但已经是你身上比较明显的一部分。`
+    out.push(r.state==="high"?`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，在问卷中达到 DSM-5 所列条目数量的参考门槛（${m.need} 条），整体强度 ${P}%。在你的自我描述里，这种模式相当突出。不过问卷只是起点，是否构成“障碍”，还取决于它是不是长期、普遍，并且给你带来了明显的痛苦或损害。`
+      :r.state==="mid"?`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，距离条目数量参考门槛（${m.need} 条）还差 ${Math.max(1,m.need-r.hits)} 条，整体强度 ${P}%。它没有达到筛查线，但已经是你身上比较明显的一部分。`
       :`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，整体强度 ${P}%，这条脉络在你身上比较微弱。`);
   }
   let p2="";
@@ -1233,6 +1270,7 @@ function analyze(r){
   if(!lit.length&&!half.length&&top&&top.mean>=1.5)p2+=`相对最强的一条是${q(top.label)}。`;
   if(p2)out.push(p2);
   if(r.state!=="low")out.push(INTRO[m.id].lit);
+  const custom=nuance(r);if(custom)out.push(custom);
   // supplementary items
   const sv=i=>r.supp[i]&&r.supp[i].v;
   if(m.id==="asd"&&sv(0)>=3)out.push("你在“社交伪装”这一条上回答很像你。很多有自闭特质的人，尤其是女性，会通过观察和模仿来融入，代价是长期的疲惫。如果这条很像你，社交那几题的回答可能低估了你的真实情况。");
@@ -1313,7 +1351,7 @@ $("copy").onclick=()=>{
   const R=window.__R||[];
   const st=S.ver==="short"?{high:"倾向明显",mid:"有一定倾向",low:"微弱"}:{high:"达到筛查线",mid:"接近筛查线",low:"微弱"};
   const lines=R.filter(r=>!r.none).sort((a,b)=>b.pct-a.pct).map(r=>`${r.m.zh}：强度 ${Math.round(r.pct*100)}%，${r.sub}（${st[r.state]}）`);
-  const txt=`人格障碍自测${S.ver==="short"?"简化版":"完整版"}结果（晶脉 Crystal Vein）\n\n${lines.join("\n")}\n\n这是依据 DSM-5 标准编写的自评问卷，不是诊断。\n${location.href.split("#")[0]}`;
+  const txt=`人格障碍自测${S.ver==="short"?"简化版":"完整版"}结果（晶脉 Crystal Vein）\n\n${$("summary").textContent}\n\n${lines.join("\n")}\n\n这是依据 DSM-5 标准编写的自评问卷，不是诊断。\n${location.href.split("#")[0]}`;
   const done=()=>toast("已复制到剪贴板");
   if(navigator.clipboard)navigator.clipboard.writeText(txt).then(done,()=>fallbackCopy(txt));else fallbackCopy(txt);
 };
