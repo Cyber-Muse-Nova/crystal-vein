@@ -1010,13 +1010,19 @@ function crystal(vals,{size="hero",grow=false,labels=false}={}){
       const bq3=pt(a,30+L*.74,s*.2),be3=pt(a,30+L*.86,s*1.7);
       const dl=grow?`style="--d:${(.15+i*.09).toFixed(2)}s"`:"";
       const [tx,ty]=P(a,30+L);
+      const [sx,sy]=P(a,30);
+      const neonId=`neon-${z}-${i}`;
+      const accent=d.state==="low"?"#bb8fff":d.state==="high"?"#ea45fa":"#a34cff";
+      defs+=`<linearGradient id="${neonId}" gradientUnits="userSpaceOnUse" x1="${sx.toFixed(2)}" y1="${sy.toFixed(2)}" x2="${tx.toFixed(2)}" y2="${ty.toFixed(2)}">
+        <stop stop-color="#ff85cb"/><stop offset=".24" stop-color="#ff40b3"/><stop offset=".57" stop-color="${accent}"/>
+        <stop offset=".78" stop-color="#b27aff"/><stop offset="1" stop-color="${col}"/></linearGradient>`;
       const paths=`<path class="vein" pathLength="1" d="M${p0} Q${pc} ${p1}"/>
         <path class="vein" pathLength="1" d="M${bq} Q${bc} ${be}"/>
         <path class="vein" pathLength="1" d="M${bq2} Q${bc2} ${be2}"/>
         ${v>.45?`<path class="vein" pathLength="1" d="M${bq3} L${be3}"/>`:""}`;
       veins+=`<g ${dl} opacity="${d.state==="low"?.6:1}">
-        <g filter="url(#glow-${z})" stroke="${col}" fill="none" stroke-linecap="round" stroke-width="${rich?1.5:2.2}">${paths}</g>
-        ${rich?`<g stroke="#fff" stroke-opacity=".75" fill="none" stroke-linecap="round" stroke-width=".55">${paths}</g>`:""}
+        <g filter="url(#glow-${z})" stroke="url(#${neonId})" fill="none" stroke-linecap="round" stroke-width="${rich?2.5:2.8}">${paths}</g>
+        ${rich?`<g stroke="#fff3fc" stroke-opacity=".84" fill="none" stroke-linecap="round" stroke-width=".55">${paths}</g>`:""}
         <g class="tip">
           ${rich?`<circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="${(6+5*v).toFixed(1)}" fill="url(#dew-${z})" opacity=".55"/>`:""}
           <circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="${(1.9+1.7*v).toFixed(1)}" fill="#F8F0FF"/>
