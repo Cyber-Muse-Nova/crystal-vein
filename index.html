@@ -916,63 +916,90 @@ function crystal(vals,{size="hero",grow=false,labels=false}={}){
   const P=(a,r,w=0)=>[Math.cos(a)*r-Math.sin(a)*w,Math.sin(a)*r+Math.cos(a)*w];
   const S=p=>p[0].toFixed(1)+","+p[1].toFixed(1);
   const pt=(a,r,w)=>S(P(a,r,w));
+  const poly=(a,pts)=>pts.map(([r,w])=>pt(a,r,w)).join(" ");
   const star=(x,y,s)=>`M${(x-s).toFixed(1)},${y.toFixed(1)}Q${x.toFixed(1)},${y.toFixed(1)} ${x.toFixed(1)},${(y-s).toFixed(1)}Q${x.toFixed(1)},${y.toFixed(1)} ${(x+s).toFixed(1)},${y.toFixed(1)}Q${x.toFixed(1)},${y.toFixed(1)} ${x.toFixed(1)},${(y+s).toFixed(1)}Q${x.toFixed(1)},${y.toFixed(1)} ${(x-s).toFixed(1)},${y.toFixed(1)}Z`;
   const rich=size!=="mini";
+  let still=false;try{still=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+  const motion=rich&&!still;
+  const LIGHT=-128*Math.PI/180,lit=n=>.5+.5*Math.cos(n-LIGHT);
+  const IRIS=["#FF70B8","#C060FF","#60D0FF"];
   const vb=labels?"-238 -222 476 444":"-190 -190 380 380";
   const z=size;
   let defs=`<filter id="glow-${z}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   <radialGradient id="core-${z}"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#ffe1f1"/><stop offset=".5" stop-color="#ff8cc6" stop-opacity=".55"/><stop offset=".78" stop-color="#c060ff" stop-opacity=".18"/><stop offset="1" stop-color="#c060ff" stop-opacity="0"/></radialGradient>
   <radialGradient id="gem-${z}" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#fff4fb"/><stop offset=".3" stop-color="#ffb6dc"/><stop offset=".65" stop-color="#a24be0"/><stop offset="1" stop-color="#3a1466"/></radialGradient>
   <radialGradient id="halo-${z}"><stop offset="0" stop-color="#d27aff" stop-opacity=".30"/><stop offset=".35" stop-color="#c060ff" stop-opacity=".13"/><stop offset=".7" stop-color="#ff70b8" stop-opacity=".05"/><stop offset="1" stop-color="#0A0515" stop-opacity="0"/></radialGradient>
+  <radialGradient id="lotus-${z}" gradientUnits="userSpaceOnUse" r="70"><stop offset=".25" stop-color="#fff0f8" stop-opacity=".34"/><stop offset=".6" stop-color="#ff9ccd" stop-opacity=".14"/><stop offset="1" stop-color="#c060ff" stop-opacity=".04"/></radialGradient>
   <radialGradient id="dew-${z}"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".35" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-  <linearGradient id="silk-${z}" x2="96%" y2="18%">
-    <stop stop-color="#48134e"/><stop offset=".15" stop-color="#9a478e"/><stop offset=".23" stop-color="#ffc3ea"/>
-    <stop offset=".29" stop-color="#b55dbf"/><stop offset=".47" stop-color="#441a70"/><stop offset=".63" stop-color="#9a61d5"/>
-    <stop offset=".77" stop-color="#eab7ff"/><stop offset=".82" stop-color="#a372d4"/><stop offset="1" stop-color="#552576"/>
-  </linearGradient>
-  <linearGradient id="fold-${z}" x1="0%" y1="100%" x2="80%" y2="0%">
-    <stop stop-color="#f59ad2"/><stop offset=".24" stop-color="#541956"/><stop offset=".52" stop-color="#ac62b8"/>
-    <stop offset=".74" stop-color="#f5c5eb"/><stop offset=".84" stop-color="#9e5fae"/><stop offset="1" stop-color="#ffdfef"/>
-  </linearGradient>
-  <radialGradient id="pearl-${z}" cx="30%" cy="22%" r="83%">
-    <stop stop-color="#fff"/><stop offset=".22" stop-color="#fff1ec"/><stop offset=".54" stop-color="#edacde"/>
-    <stop offset=".81" stop-color="#93569d"/><stop offset="1" stop-color="#e7b7f5"/>
-  </radialGradient>`;
-  const paint=name=>`url(#${name}-${z})`;
-  const blade="M0 -13 C-6 -39 -24 -84 -22 -111 C-22 -132 -9 -155 2 -178 C0 -155 19 -138 20 -112 C24 -78 7 -43 0 -13Z";
-  defs+=`<g id="blade-${z}">
-    <path d="${blade}" fill="${paint("silk")}" stroke="#e9b4ef" stroke-width=".8"/>
-    <path d="M0 -14 C-5 -60 -18 -97 -12 -126 Q-7 -151 2 -178 C-9 -133 10 -101 4 -65Z" fill="${paint("fold")}"/>
-    <path d="M2 -178 C1 -153 15 -131 16 -109 C17 -87 9 -69 5 -55 C19 -106 4 -128 2 -178Z" fill="#ffe3fa" opacity=".65"/>`;
+  <linearGradient id="ring-${z}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF70B8" stop-opacity=".35"/><stop offset=".5" stop-color="#C060FF" stop-opacity=".12"/><stop offset="1" stop-color="#60D0FF" stop-opacity=".35"/></linearGradient>`;
+  if(motion)defs+=`<linearGradient id="sh-${z}" gradientUnits="userSpaceOnUse" x1="-60" y1="-34" x2="60" y2="34"><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#ffeefa" stop-opacity=".24"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><animateTransform attributeName="gradientTransform" type="translate" values="-330 -190;330 190;330 190" keyTimes="0;.42;1" dur="9s" begin="1.2s" repeatCount="indefinite"/></linearGradient>`;
+
+  let back="",body="",veins="",lab="",lotus="",sparks="",shine="";
+  // the main petal: a long cut gem, base 26, shoulders at 72 and 120, tip 178
+  const HALF=[[26,0],[26,-6],[72,-15],[120,-22],[178,0]];
+  const half=s=>HALF.map(([r,w])=>[r,w*s]);
+  const OUT=[[26,-6],[72,-15],[120,-22],[178,0],[120,22],[72,15],[26,6]];
+  const TABLE=[[46,0],[80,-7.5],[124,-10],[160,0],[124,10],[80,7.5]];
+
+  back+=`<circle r="188" fill="url(#halo-${z})"/>`;
   if(rich){
-    for(let j=-4;j<=4;j++){
-      defs+=`<path d="M0 -19 C${j*1.7} -54 ${j*6.7} -103 ${j*3.4} -133 Q${j*1.9} -154 2 -175" fill="none" stroke="${j%2?"#fff2fc":"#5e286b"}" stroke-width="${j%2?.55:.85}" opacity=".58"/>`;
-    }
-    const dust=rng(127);
-    for(let k=0;k<27;k++){
-      const t=dust(),y=42+t*113,x=(dust()-.5)*Math.sin(Math.PI*t)*31;
-      defs+=`<circle cx="${x.toFixed(1)}" cy="-${y.toFixed(1)}" r="${(.23+dust()*.54).toFixed(2)}" fill="#fff4fe" opacity="${(.22+dust()*.64).toFixed(2)}"/>`;
-    }
+    back+=`<circle r="184" fill="none" stroke="url(#ring-${z})" stroke-width=".6" stroke-dasharray="1 5" opacity=".7"/>`;
+    back+=`<circle r="146" fill="none" stroke="rgba(232,224,240,.06)" stroke-width=".5"/>`;
   }
-  defs+=`</g>`;
-  const useBlade=`<use href="#blade-${z}"/>`;
-  let back=`<circle r="188" fill="${paint("halo")}"/>`,body="",veins="",lab="",lotus="",sparks="";
+
   vals.forEach((d,i)=>{
-    const angle=i*30,a=(angle-90)*Math.PI/180;
+    const a=(i*30-90)*Math.PI/180,b=a+Math.PI/12;
     const col=d.state?COLOR[d.state]:"#8f7fc0";
     const none=d.v==null;
     const v=none?0:Math.max(0,Math.min(1,d.v));
+    const op=none?0:(.08+.42*v)*(d.state==="low"?.6:1);
+    const [x0,y0]=P(a,26),[x1,y1]=P(a,178);
+
+    // back corolla, offset half a step, iridescent and faint
     if(rich){
-      back+=`<g transform="rotate(${angle+13}) scale(.79 ${.77+.09*Math.sin(i*2)})" opacity=".56">${useBlade}</g>`;
+      const ic=IRIS[i%3];
+      back+=`<polygon points="${poly(b,[[30,-3],[94,-10],[120,-9],[152,0],[120,9],[94,10],[30,3]])}" fill="${ic}" fill-opacity=".045" stroke="${ic}" stroke-opacity=".16" stroke-width=".5"/>`;
+      back+=`<line x1="${pt(b,40,0).split(",")[0]}" y1="${pt(b,40,0).split(",")[1]}" x2="${pt(b,150,0).split(",")[0]}" y2="${pt(b,150,0).split(",")[1]}" stroke="#F8F0FF" stroke-opacity=".07" stroke-width=".4"/>`;
+      back+=`<polygon class="tw" style="animation-delay:${(i*.53%3.6).toFixed(2)}s" points="${poly(b,[[163,0],[169,-2.6],[176,0],[169,2.6]])}" fill="#F8F0FF" opacity=".55"/>`;
+      // inner lotus ring
+      lotus+=`<polygon points="${poly(b,[[20,-4],[38,-9],[66,0],[38,9],[20,4]])}" fill="url(#lotus-${z})" stroke="rgba(255,228,244,.32)" stroke-width=".5"/>`;
+      lotus+=`<line x1="${pt(b,24,0).split(",")[0]}" y1="${pt(b,24,0).split(",")[1]}" x2="${pt(b,60,0).split(",")[0]}" y2="${pt(b,60,0).split(",")[1]}" stroke="#fff" stroke-opacity=".22" stroke-width=".45"/>`;
     }
-    body+=`<g transform="rotate(${angle}) scale(${i%2?-.97:1} ${.975+.02*Math.cos(i*1.6)})" opacity="${none?.20:.74+.22*v}">${useBlade}</g>`;
-    if(rich&&!none&&[1,5,8].includes(i)){
-      const [x,y]=P(a,95+17*Math.sin(i),-11);
-      const radius=i===5?4.8:3.4;
-      body+=`<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">
-        <circle r="${radius}" fill="#451d61" fill-opacity=".45" stroke="#facfee" stroke-opacity=".74" stroke-width=".6"/>
-        <path d="M${-radius*.83} .4 Q0 ${radius*1.45} ${radius*.88} 0 Q0 ${radius*.76} ${-radius*.83} .4Z" fill="#f3b8eb"/>
-        <ellipse cx="-1" cy="-1.5" rx="1.15" ry=".68" fill="#fff7ff"/></g>`;
+
+    // data colour runs base to tip
+    defs+=`<linearGradient id="f-${z}-${i}" gradientUnits="userSpaceOnUse" x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}"><stop offset="0" stop-color="${col}" stop-opacity="${(op*1.35).toFixed(3)}"/><stop offset=".62" stop-color="${col}" stop-opacity="${(op*.6).toFixed(3)}"/><stop offset="1" stop-color="#F8F0FF" stop-opacity="${(op*.4+.03).toFixed(3)}"/></linearGradient>`;
+    // edge light: dim at the base, catching light at the tip
+    defs+=`<linearGradient id="e-${z}-${i}" gradientUnits="userSpaceOnUse" x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}"><stop offset="0" stop-color="#F8F0FF" stop-opacity="${none?.05:.12}"/><stop offset=".55" stop-color="${none?"#8f7fc0":col}" stop-opacity="${none?.12:.28}"/><stop offset="1" stop-color="#ffe9f6" stop-opacity="${none?.18:.55}"/></linearGradient>`;
+
+    // two halves of the petal, each shaded by how it faces the light
+    [-1,1].forEach(s=>{
+      const L=lit(a+s*Math.PI/2);
+      body+=`<polygon points="${poly(a,half(s))}" fill="url(#f-${z}-${i})"/>`;
+      body+=L>.5
+        ?`<polygon points="${poly(a,half(s))}" fill="#ffe4f4" fill-opacity="${((L-.5)*(none?.06:.11)).toFixed(3)}"/>`
+        :`<polygon points="${poly(a,half(s))}" fill="#0A0515" fill-opacity="${((.5-L)*.36).toFixed(3)}"/>`;
+    });
+    if(rich){
+      body+=`<polygon points="${poly(a,TABLE)}" fill="#F8F0FF" fill-opacity="${none?.015:.045}" stroke="#F8F0FF" stroke-opacity="${none?.06:.14}" stroke-width=".5"/>`;
+      body+=`<path d="M${pt(a,72,-15)}L${pt(a,80,-7.5)}M${pt(a,120,-22)}L${pt(a,124,-10)}M${pt(a,72,15)}L${pt(a,80,7.5)}M${pt(a,120,22)}L${pt(a,124,10)}M${pt(a,160,0)}L${pt(a,178,0)}" stroke="#F8F0FF" stroke-opacity="${none?.06:.16}" stroke-width=".5" fill="none"/>`;
+    }
+    body+=`<polygon points="${poly(a,OUT)}" fill="none" stroke="url(#e-${z}-${i})" stroke-width="${rich?.9:1.4}" stroke-linejoin="round" ${none?'stroke-dasharray="3 4"':''}/>`;
+    body+=`<line x1="${pt(a,30,0).split(",")[0]}" y1="${pt(a,30,0).split(",")[1]}" x2="${pt(a,174,0).split(",")[0]}" y2="${pt(a,174,0).split(",")[1]}" stroke="url(#e-${z}-${i})" stroke-width=".6" opacity=".7"/>`;
+    if(motion)shine+=`<polygon points="${poly(a,OUT)}"/>`;
+
+    // Suspended pinpricks catch the light inside the original glass facets.
+    if(rich&&!none){
+      const dust=rng(821+i*157);
+      let grains="";
+      for(let k=0;k<13;k++){
+        const radius=52+dust()*107;
+        const spread=radius<120?9+(radius-52)*.14:(178-radius)*.31;
+        const [x,y]=P(a,radius,(dust()-.5)*2*spread);
+        const glint=.28+dust()*.55;
+        grains+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${glint.toFixed(2)}" fill="${k%3?"#ffe4f5":"#fff"}" opacity="${(.28+dust()*.42).toFixed(2)}"/>`;
+        if(k===0&&i%3===1)grains+=`<path class="tw" style="animation-delay:-${i*.37}s" d="${star(x,y,3.6)}" fill="#fff0fb"/>`;
+      }
+      body+=`<g>${grains}</g>`;
     }
     // veins: a coloured glow with a white-hot filament inside
     if(v>0.02){
@@ -1013,29 +1040,23 @@ function crystal(vals,{size="hero",grow=false,labels=false}={}){
     }
   }
 
-  // Folded tepals cup the gem. Stagger the stamens between the data axes.
-  let heart="";
-  const curl="M-2 1 C-12 -5 -17 -20 -13 -32 C-11 -39 -4 -44 1 -46 C-7 -35 5 -28 7 -18 C10 -8 4 -2 -2 1Z";
-  for(let i=0;i<(rich?12:6);i++){
-    const angle=i*(rich?30:60);
-    lotus+=`<g transform="rotate(${angle+11}) scale(.91 ${.89+.12*Math.sin(i*2)})">
-      <path d="${curl}" fill="${paint("fold")}" stroke="#f4b5e2" stroke-width=".55"/>
-      <path d="M-2 -2 C-13 -17 -13 -32 0 -45 C-8 -30 -7 -16 -2 -2Z" fill="#e3a7ef" opacity=".53"/></g>`;
-    if(rich){
-      const h=42+11*(1+Math.sin(i*2.4)),x=4*Math.cos(i);
-      lotus+=`<g transform="rotate(${angle+15})"><path d="M0 -6 C-5 -20 9 -39 ${x} -${h}" fill="none" stroke="#582368" stroke-width="2.6"/>
-        <path d="M-.6 -6 C-5.7 -20 8.4 -39 ${x-.6} -${h}" fill="none" stroke="#ffceeb" stroke-width="1.05"/>
-        <ellipse cx="${x}" cy="-${h}" rx="2.2" ry="3.8" fill="${paint("pearl")}" transform="rotate(22 ${x} -${h})"/></g>`;
-    }
+  // the heart: a cut gem under a soft bloom, with a four-point flare
+  let heart=`<circle r="${rich?50:34}" fill="url(#core-${z})" opacity="${rich?.7:.9}"/>`;
+  const G=[...Array(12)].map((_,k)=>P((k*30-75)*Math.PI/180,23)),g=[...Array(6)].map((_,k)=>P((k*60-75)*Math.PI/180,11));
+  heart+=`<polygon points="${G.map(S).join(" ")}" fill="url(#gem-${z})" stroke="rgba(255,236,248,.55)" stroke-width=".7"/>`;
+  if(rich){
+    heart+=`<path d="${G.map((p,k)=>`M${S(p)}L${S(g[k>>1])}`).join("")}${g.map((p,k)=>`${k?"L":"M"}${S(p)}`).join("")}Z" fill="none" stroke="rgba(255,240,250,.38)" stroke-width=".5"/>`;
+    heart+=`<polygon points="${g.map(S).join(" ")}" fill="#fff" fill-opacity=".14"/>`;
   }
-  for(let i=0;i<7;i++){
-    heart+=`<path transform="rotate(${i*360/7}) scale(.76 .52)" d="${curl}" fill="${paint("silk")}" stroke="#f5bedf" stroke-width=".85"/>`;
+  heart+=`<circle r="${rich?13:15}" fill="url(#core-${z})"/><circle r="${rich?3.6:5}" fill="#fff"/>`;
+  if(rich){
+    heart+=`<g class="flare" fill="#fff"><path d="M-46,0L0,-1.1L46,0L0,1.1Z" opacity=".7"/><path d="M0,-40L1.1,0L0,40L-1.1,0Z" opacity=".7"/><path d="${star(0,0,15)}" opacity=".9" transform="rotate(45)"/></g>`;
   }
-  heart+=`<circle r="16" fill="${paint("core")}" opacity=".72"/><circle r="8.7" fill="${paint("gem")}" stroke="#ffd9f1" stroke-width=".7"/>
-    <path d="M-6 1L-3 -6 3 -7 6 -2 2 4Z" fill="#ffdbf6" opacity=".42"/><ellipse cx="-3" cy="-3.8" rx="2.3" ry="1.15" fill="#fff0fc"/>`;
+
+  const shineG=motion?`<g fill="url(#sh-${z})" style="mix-blend-mode:screen">${shine}</g>`:"";
   const cls=size==="hero"?"breathe":"";
   return `<svg viewBox="${vb}" class="${size==="hero"?"hero-crystal":size==="res"?"res-crystal":""} ${grow?"grow":""}" role="img" aria-label="十二面水晶，每一面代表一种模式">
-    <defs>${defs}</defs><g class="${cls}">${back}${body}${veins}${lotus}${heart}${sparks}</g>${lab}</svg>`;
+    <defs>${defs}</defs><g class="${cls}">${back}${body}${shineG}${lotus}${veins}${heart}${sparks}</g>${lab}</svg>`;
 }
 
 /* ============ starfield (drawn once, no ambient motion) ============ */
