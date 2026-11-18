@@ -235,6 +235,68 @@ p{color:var(--mist)}
   padding:12px 20px;border-radius:999px;background:rgba(30,16,52,.92);border:1px solid var(--edge);color:var(--pearl);font-size:14px;transition:all .3s ease;pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
+/* atlas */
+.atlas-entry{margin-top:20px}
+.back{display:inline-block;margin-bottom:22px}
+.atlas-title{font-size:clamp(36px,9vw,52px);font-weight:300;letter-spacing:.08em;line-height:1.15}
+.atlas-lead{margin-top:16px;max-width:32em}
+.a-group{margin-top:40px}
+.a-group>h2{font-size:15px;font-family:var(--sans);font-weight:400;color:var(--faint);display:flex;gap:10px;align-items:baseline}
+.a-group>h2 .latin{font-size:16px}
+.a-list{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.art{overflow:hidden}
+.art-head{width:100%;text-align:left;padding:22px 22px 20px;display:block}
+.art-name{font-family:var(--serif);font-size:21px;font-weight:500;color:var(--pearl)}
+.art-name .latin{font-size:17px;color:var(--mist);margin-left:8px}
+.art-tag{display:block;margin-top:6px;font-family:var(--serif);font-weight:300;font-size:16px;color:#e9c8ff}
+.art-more{display:block;margin-top:10px;font-size:12.5px;color:var(--faint)}
+.art-body{display:none;padding:2px 22px 26px;border-top:1px solid var(--edge-soft)}
+.art.open .art-body{display:block}
+.art.open .art-more{display:none}
+.art h4{margin-top:22px;font-size:14px;font-weight:500;color:#cfa6ff;font-family:var(--sans)}
+.art h4+p{margin-top:4px;font-size:15px}
+.belief{margin:22px 0 4px;padding:18px 18px;border-radius:14px;background:rgba(255,112,184,.06);border:1px solid rgba(255,112,184,.18);
+  font-family:var(--serif);font-size:17.5px;line-height:1.75;color:var(--pearl);text-align:center}
+.belief small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--faint);margin-bottom:6px}
+
+/* deeper result */
+.panel{margin-top:16px;padding:24px 22px}
+.panel h3{font-size:18px}
+.panel>p{margin-top:8px;font-size:15px}
+.cgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
+.cstat{padding:12px 4px 10px;text-align:center;border-radius:14px;border:1px solid var(--edge-soft)}
+.cstat.top{border-color:rgba(255,112,184,.4);background:rgba(255,112,184,.06)}
+.cstat b{display:block;font-family:var(--latin);font-style:italic;font-weight:500;font-size:28px;line-height:1.1;color:var(--pearl);font-variant-numeric:tabular-nums}
+.cstat b small{font-size:14px;color:var(--faint)}
+.cstat span{display:block;margin-top:4px;font-size:12.5px;color:var(--mist);line-height:1.4}
+.doms{list-style:none;margin-top:14px}
+.doms li{padding:14px 0;border-bottom:1px dashed rgba(200,170,255,.10)}
+.doms li:last-child{border-bottom:0}
+.dh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.dh b{font-family:var(--serif);font-weight:500;font-size:16.5px;color:var(--pearl)}
+.dh b .latin{font-size:14.5px;color:var(--faint);margin-left:6px;font-weight:400}
+.dh em{font-style:normal;font-size:13px;color:var(--mist);white-space:nowrap}
+.dbar{position:relative;height:3px;margin-top:10px;border-radius:3px;background:rgba(200,170,255,.12)}
+.dbar span{position:absolute;inset:0 auto 0 0;border-radius:3px;background:linear-gradient(90deg,var(--cyan),var(--lav),var(--rose));box-shadow:0 0 10px rgba(255,112,184,.5)}
+.doms p{margin-top:8px;font-size:14px;color:var(--faint)}
+.doms li.na{opacity:.5}
+.dnote{margin-top:14px;font-size:12.5px;color:var(--faint)}
+.combos{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.combo{padding:20px 22px}
+.combo h3{font-size:17px}
+.combo h3 i{font-style:normal;color:var(--rose);margin:0 8px}
+.combo p{margin-top:8px;font-size:15px}
+.ana{margin-top:16px}
+.ana p{color:var(--plat);font-size:15.5px}
+.ana p+p{margin-top:10px}
+.ana p.soft{color:var(--mist)}
+.mh{margin-top:20px;font-size:14px;font-weight:500;color:#cfa6ff}
+.tries{list-style:none;margin-top:6px}
+.tries li{position:relative;padding-left:18px;margin-top:8px;font-size:14.5px;color:var(--mist)}
+.tries li::before{content:"";position:absolute;left:0;top:.75em;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffd2ea 50%,#ff70b8);box-shadow:0 0 8px rgba(255,112,184,.8)}
+.to-atlas{margin-top:18px}
+@media (max-width:420px){.cstat b{font-size:24px}}
+
 /* crystal svg */
 .cx-label{font-family:var(--sans);font-size:12px;fill:var(--mist)}
 .cx-label.high{fill:#ffb3d9}
@@ -281,6 +343,7 @@ p{color:var(--mist)}
       <p>请按你<strong>长期以来</strong>的样子作答：成年以后、大多数时候、在不同场合里的你，而不是最近几天的状态。题目会打乱顺序，作答时不显示它属于哪一类，以免先入为主。</p>
       <p>有完整版和简化版两种。完整版逐条对照诊断标准，简化版只问每种模式最核心的几条，几分钟就能做完。</p>
       <p>它不能给你诊断，但能帮你把模糊的“我是不是……”变成具体的、可以拿去和专业人士讨论的条目。</p>
+      <button class="ghost atlas-entry" id="atlas-from-home" type="button">先了解十二种模式</button>
     </div>
 
     <div class="glass picker">
@@ -304,6 +367,15 @@ p{color:var(--mist)}
     </div>
 
     <p class="fine">所有答案只保存在你自己的浏览器里，不会上传到任何地方。<br>如果你此刻有伤害自己的念头，请拨打全国统一心理援助热线 12356。</p>
+  </section>
+
+  <!-- atlas -->
+  <section class="screen" id="s-atlas" aria-labelledby="t-atlas">
+    <button class="link back" id="atlas-back" type="button">返回</button>
+    <h1 class="atlas-title" id="t-atlas">十二种模式</h1>
+    <p class="lead atlas-lead">十种人格障碍，按 DSM-5 分成三群；另外两种是神经发育特质。每一种都写了它从里面看是什么感觉、从外面看是什么样子、它的光，以及怎样会变好。</p>
+    <div id="atlas"></div>
+    <p class="fine">患病率数据来自 DSM-5 引用的社区调查，不同研究差异较大，仅供参考。</p>
   </section>
 
   <!-- quiz -->
@@ -342,6 +414,19 @@ p{color:var(--mist)}
     <div id="crisis"></div>
     <div id="context"></div>
 
+    <div class="sect" id="profile-sect">
+      <h2>整体画像</h2>
+      <p>把十二条脉络按 DSM-5 的分群合在一起看，再换一个角度，用五个特质维度描述你。</p>
+      <div class="glass panel" id="clusters"></div>
+      <div class="glass panel" id="domains"></div>
+    </div>
+
+    <div class="sect" id="combo-sect">
+      <h2>脉络之间</h2>
+      <p>有几条脉络同时在你身上发光。它们之间常有重叠，放在一起看会更清楚。这里列出最亮的几组。</p>
+      <div class="combos" id="combos"></div>
+    </div>
+
     <div class="sect">
       <h2>十二条脉络</h2>
       <p id="mods-note">先按筛查结果、再按强度排列。每一颗珍珠是一条诊断标准，亮起的是你回答“比较像我”或“非常像我”的那几条。点开可以看到每一条的具体内容。</p>
@@ -373,6 +458,9 @@ p{color:var(--mist)}
       </div>
     </div>
 
+    <div class="actions">
+      <button class="ghost" id="atlas-from-res" type="button">阅读十二种模式的介绍</button>
+    </div>
     <div class="actions">
       <button class="btn" id="copy" type="button">复制结果摘要</button>
       <button class="ghost" id="review" type="button">修改答案</button>
@@ -554,6 +642,187 @@ const SCALE = ["完全不像我","不太像我","有时像我","比较像我","�
 const CLUSTERS = {A:["A 群","古怪的、疏离的","Cluster A"],B:["B 群","戏剧化的、情绪化的","Cluster B"],C:["C 群","焦虑的、恐惧的","Cluster C"],N:["神经发育特质","不属于人格障碍","Neurodevelopmental"]};
 const COLOR = {high:"#FF70B8",mid:"#C060FF",low:"#60D0FF",prog:"#C060FF"};
 
+/* ============ atlas: long-form introductions ============ */
+const INTRO = {
+ ppd:{tag:"世界在我眼里布满了暗处的意图。",
+  inner:"总有一种隐约的不安全：别人的笑可能是嘲讽，好意背后可能藏着算计。放松警惕就意味着危险，所以必须时刻留意、提前防备。这种警觉很耗神，也很孤独。",
+  outer:"在别人看来，这样的人多疑、难以亲近、容易记仇，对玩笑和批评特别敏感，有时会因为一点小事突然发火或疏远。",
+  belief:"如果我放松警惕，别人就会利用我、伤害我。",
+  light:"对风险和不怀好意的人格外敏锐，不容易被骗，做事谨慎，独立，懂得保护自己。",
+  confuse:"真正经历过背叛、欺凌或创伤之后的警惕，是合理的自我保护，不等于偏执型。偏执型的猜疑在没有证据时也持续存在，并且贯穿几乎所有关系。它和分裂型的区别是没有明显的知觉异常和古怪思维；和妄想障碍的区别是猜疑还没有达到坚信不疑的程度。",
+  origin:"研究认为与遗传有关，在有精神分裂谱系家族史的人中略多；童年受虐、被羞辱或长期处在充满敌意的环境，也可能让一个人学会“先防着别人”。",
+  help:"很少有人主动为此求助，因为信任本身就是难点。如果愿意尝试，一段稳定、透明、不急于反驳的治疗关系是基础；认知治疗可以帮助检验“他是不是故意的”这一类自动想法。伴随的焦虑和抑郁可以单独治疗。",
+  prev:"社区调查中约 2% 到 4%。",
+  lit:"这条脉络发光，说明“信任”对你来说可能是一件需要额外力气的事。值得问问自己：这些猜疑里，有多少有真实的证据，有多少是过去的经历在现在投下的影子？",
+  tries:["当你觉得别人话里有话时，先写下三种其他可能的解释，再决定要不要回应。","把“过去被伤害的经历”和“正在发生的事”分开，问问自己：这一次的证据是什么？","找一两个可以核对想法的人，在下结论之前先说给他们听。"]},
+ szpd:{tag:"一个人的时候，我是完整的。",
+  inner:"和别人在一起时，感到的常常不是害怕，而是“没什么必要”。亲密关系带来的满足很有限，独处反而更自在。外界的赞美和批评，很难真正触动内心。",
+  outer:"看起来冷淡、疏离、情绪平淡，像总是站在人群外面。很少主动联系别人，也不太在意社交上的礼节。",
+  belief:"人和人之间的关系没有那么重要，我一个人就很好。",
+  light:"独立、自足，能长时间专注于自己感兴趣的事，不容易被别人的看法左右，在需要独处和专注的工作里常常表现出色。",
+  confuse:"内向的人也喜欢独处，但能享受亲密关系；回避型渴望连接，只是害怕被拒绝；自闭症谱系的社交困难来自理解上的差异，伴随刻板的兴趣，并且从童年就存在。分裂样的核心是“不太需要”。",
+  origin:"可能与遗传和气质有关，和精神分裂谱系有一定的家族关联；冷漠、缺少情感回应的早年环境也可能有影响。",
+  help:"只有在本人觉得困扰时才需要干预。治疗通常尊重对独处的需要，目标不是“变得合群”，而是在想要连接的时候有能力做到，并处理可能伴随的低落。",
+  prev:"社区调查中约 3% 到 5%。",
+  lit:"这条脉络发光，说明你对人际的需要可能确实比一般人少。关键是分辨：你是真的不需要，还是因为太累、太失望，才不想要了？后一种更像是一种保护。",
+  tries:["列出真正能让你愉快的事，哪怕很小，留意快乐的来源是不是在变少。","如果你满意现在的距离，不必勉强自己合群；如果偶尔感到孤单，可以从低压力、有共同兴趣的连接开始。","留意情绪平淡是一直如此，还是最近才变得麻木，后者可能和抑郁有关。"]},
+ stpd:{tag:"世界里藏着别人看不见的联系。",
+  inner:"常常感觉某些巧合有特别的含义，相信一些超出常理的力量，偶尔有不寻常的感知体验。和人相处时有一种持续的不安，即使熟悉了也很难放松。",
+  outer:"在别人眼里有些古怪、特立独行，说话方式抽象跳跃，衣着和习惯与众不同，社交时显得紧张或格格不入。",
+  belief:"我能感受到别人感受不到的东西，可他们不会理解我。",
+  light:"联想丰富，想象力强，常有独特的审美和创造力，愿意接纳不寻常的想法。",
+  confuse:"对玄学、塔罗、灵性或宇宙的兴趣在很多文化里都很常见，本身说明不了什么，关键是这些信念是否让你和现实脱节、影响判断和生活。在 ICD-11 里，分裂型障碍被归入精神分裂谱系，而不是人格障碍，因为它和精神分裂症在遗传上关系更近。",
+  origin:"遗传的影响比较大，常和精神分裂谱系的家族史有关。",
+  help:"认知行为治疗可以帮助检验不寻常的信念和牵连观念，社交技能训练能减轻相处时的紧张。如果知觉异常明显，医生可能会考虑药物。",
+  prev:"不同研究差异很大，约 0.6% 到 4.6%。",
+  lit:"这条脉络发光，说明你感知世界的方式可能比较独特。这既可以是创造力的来源，也值得留意它有没有让你和现实、和身边的人产生距离。",
+  tries:["把那些“好像有含义”的巧合记下来，过一段时间回头看，有多少真的应验了。","在创作里安放你的奇异联想，它们在艺术里是财富。","如果异常的感知变得越来越频繁或越来越真实，尽快找精神科医生评估。"]},
+ aspd:{tag:"规则只是别人的规则。",
+  inner:"更在意眼前的利益和刺激，别人的痛苦较少能触动自己。规则和承诺显得可以商量，做错了事更多想到的是怎么解释，而不是内疚。",
+  outer:"在别人看来，可能冲动、不负责任、爱冒险、善于操纵，有时很有魅力，却难以信赖。",
+  belief:"这个世界弱肉强食，我得先照顾好自己。",
+  light:"在危机和高压下往往冷静果断，敢于冒险，不被恐惧束缚。",
+  confuse:"青春期的叛逆、一时的冲动或违规，并不等于反社会型。诊断要求年满十八岁，并且十五岁以前就有品行障碍。“心理病态”是一个相关但更窄的概念，更强调冷酷无情和缺乏共情。",
+  origin:"遗传和环境都很重要，童年受虐、被忽视、家庭混乱是常见的风险因素。",
+  help:"治疗比较困难，结构化的项目、针对冲动和攻击的认知行为治疗有一定帮助。很多人的反社会行为会在四十岁前后明显减少。",
+  prev:"社区调查中约 0.2% 到 3.3%。",
+  lit:"这条脉络发光，可能更多反映了冲动和冒险的倾向，而不一定是对别人的漠视。看看亮起的是哪几条：是冲动、鲁莽这一类，还是欺骗、缺乏懊悔这一类？两者的意义很不一样。",
+  tries:["在冲动行事之前，给自己一个固定的暂停，比如十分钟，再决定。","留意冒险行为背后是在追求刺激还是逃避无聊，找一些更安全的刺激来源。","如果你经常伤害到身边的人，却很难感到内疚，这值得和专业人士谈一谈。"]},
+ bpd:{tag:"我爱得像燃烧，也害怕得像坠落。",
+  inner:"情绪像没有缓冲的潮水，一点小事就能掀起巨浪，几个小时后又退去。对被抛弃格外敏感，一条没有回复的消息就可能引发恐慌。对“我是谁”的感受时而清晰时而崩塌，有时会被一种空荡荡的感觉包围。",
+  outer:"在别人眼里热烈、敏感、真诚，也不稳定：关系里时而亲密无间，时而激烈冲突；情绪来得快，有时会做出冲动的举动。",
+  belief:"我不可能被一直爱着，最后所有人都会离开我。",
+  light:"情感深刻，共情强烈，能敏锐地察觉别人的痛苦，爱得热烈而真诚，在艺术和创作里常有惊人的表达力。",
+  confuse:"双相情感障碍的情绪发作通常持续几天到几周，边缘型的情绪变化常以小时计，并且多由人际事件触发。复杂性创伤后应激障碍（C-PTSD）也有情绪和关系上的困难，两者常有重叠。ADHD 的情绪失调也容易被误认为边缘型。",
+  origin:"主流理论认为，它来自天生对情绪更敏感的气质，加上成长中情绪不被理解、不被认可的环境。创伤在一部分人身上起了作用，但并非人人都有。",
+  help:"辩证行为疗法（DBT）的证据最强，它教四类技能：情绪调节、痛苦耐受、正念和人际效能。心智化治疗（MBT）、图式治疗和移情焦点治疗也有效。长期随访研究发现，多数人在十年内不再符合诊断标准。",
+  prev:"社区调查的中位数约 1.6%，有的调查高达 5.9%。临床上女性被诊断得更多，但社区调查里男女比例接近。",
+  lit:"这条脉络发光，说明你的情绪和关系可能有很高的强度。看看亮起的是哪几条：如果集中在被抛弃、关系摇摆和情绪波动，那么关系里的安全感可能是你最核心的课题。",
+  tries:["学一点 DBT 的情绪调节技巧：情绪来的时候先给它命名，再给它打个分，等分数降下来再行动。","害怕被抛弃的时候先问自己：现在有什么证据？我能不能等两个小时再回应？","把冲动想做的事写在纸上，延迟执行。很多冲动一两个小时以后会自己退去。"]},
+ hpd:{tag:"被看见的时候，我才确定自己存在。",
+  inner:"被关注时感到生动、有活力，被忽略时会有一种说不出的不安。情绪来得快，也容易被周围的人和气氛带动。",
+  outer:"热情、有感染力、富有表现力，喜欢成为焦点；也可能被认为情绪夸张、浮于表面，或者容易受别人影响。",
+  belief:"如果没有人注意我，我就不重要。",
+  light:"有感染力，善于表达，能调动气氛，在表演、社交和需要感染力的工作里闪闪发光。",
+  confuse:"外向、爱表现、有魅力本身完全不是问题，关键在于是否“必须”成为焦点才能感到安全，以及情绪是否总浮在表面。它和自恋型都喜欢被看见，但表演型要的是关注，自恋型要的是钦佩。",
+  origin:"可能和气质有关，也和早年“只有表现出来才会被注意到”的经验有关。",
+  help:"心理治疗可以帮助探索对关注的需要背后的不安全感，学习用更深、更稳定的方式与人连接。",
+  prev:"社区调查中约 1.8%。",
+  lit:"这条脉络发光，说明“被看见”对你来说可能很重要。值得想一想：被关注的时候，你感到的是快乐，还是一种终于可以安心的放松？",
+  tries:["留意自己在没人关注时的感受，试着在独处里找到不需要观众的乐趣。","情绪强烈的时候慢一点，用更具体的话描述你的感受。","区分“我想被看见”和“我必须被看见才能确定自己”，前者是健康的愿望。"]},
+ npd:{tag:"我必须是特别的，否则我什么都不是。",
+  inner:"对自己的特别有强烈的感受，也有很多关于成功、才华或伟大爱情的幻想。被赞美时感到充实，被忽视或批评时会感到刺痛、愤怒或羞耻。很多人表面自信，内里的自尊其实非常脆弱。",
+  outer:"在别人眼里自信、有野心、有魅力，也可能傲慢、需要被捧着、难以体谅别人的感受。",
+  belief:"如果我不是特别的、出众的，我就一文不值。",
+  light:"有野心，有远大的目标，敢于想象宏大的事物，自信，能在需要领导力和愿景的位置上发挥。",
+  confuse:"有梦想、自信、喜欢被欣赏，不等于自恋型。研究者常区分两种：“夸大型”外显傲慢、追求钦佩；“脆弱型”外表害羞敏感，内心却有强烈的特权感和对认可的渴望，常常被忽视。",
+  origin:"可能和气质有关，也和早年要么被过度赞美、要么情感被忽视的经验有关，这两种环境都可能让自我价值依赖外界。",
+  help:"移情焦点治疗、图式治疗和心智化治疗都有应用，核心是建立一种不需要不断被确认的、更稳定的自我价值感。",
+  prev:"社区调查差异很大，约 0% 到 6.2%。",
+  lit:"这条脉络发光，可能意味着你的自我价值和外界的认可绑得很紧。看看亮起的是哪几条：如果集中在幻想和需要赞美，而共情、利用他人这些没有亮，那它更像一个渴望被看见的梦想家，而不是对他人的漠视。",
+  tries:["留意被批评之后的反应：是失望，还是一种整个人被否定的刺痛？后者说明自我价值太依赖外界。","练习在没有人看见的时候，也肯定自己做成的事。","在关系里，偶尔有意识地问问对方：你现在感觉怎么样？"]},
+ avpd:{tag:"我渴望靠近，又害怕被看清。",
+  inner:"非常想和别人连接，却总觉得自己不够好。每一次社交都伴随着“他们会不会觉得我很差”的担心，于是常常选择先退后，用孤独换取安全。",
+  outer:"在别人眼里害羞、安静、拘谨，好像不太想交往；熟悉以后会发现很温柔、很体贴。",
+  belief:"如果别人真正了解我，就会拒绝我。",
+  light:"细腻、敏感、体贴，很能察觉别人的感受，一旦信任就非常忠诚。",
+  confuse:"它和社交焦虑障碍高度重叠，很多人同时符合两者。内向的人喜欢独处，但不害怕评价；分裂样是不太需要关系；回避型是想要却不敢。“回避型依恋”是依恋理论里的概念，不等于回避型人格障碍。",
+  origin:"常和天生害羞、抑制的气质有关，再加上早年被批评、被排斥或被嘲笑的经历。",
+  help:"认知行为治疗、图式治疗和团体治疗都有帮助，核心是循序渐进地面对害怕的社交情境，同时练习对自己更温和。医生也可能针对社交焦虑的症状考虑药物。",
+  prev:"社区调查中约 2.4%。",
+  lit:"这条脉络发光，说明对被拒绝的恐惧可能在限制你。值得留意：你回避的是人本身，还是被评价的感觉？",
+  tries:["列一张从容易到困难的社交小挑战清单，从最简单的开始，一周做一个。","觉得自己不够好的时候，试着用对待好朋友的语气和自己说话。","记录每次社交之后“担心会发生的事”和“实际发生的事”，看看两者差多远。"]},
+ dpd:{tag:"有人在身边，我才敢往前走。",
+  inner:"做决定时总想先听听别人的意见，一个人面对事情会心慌。很怕失去身边的人，为此宁愿委屈自己。",
+  outer:"在别人眼里温和、顺从、好相处、很依赖人，很少表达不同意见。",
+  belief:"我一个人应付不了，我需要有人照顾我。",
+  light:"合作、体贴，重视关系，愿意倾听，是很好的伙伴和队友。",
+  confuse:"它和边缘型都害怕失去关系，但依赖型用顺从和讨好去留住人，边缘型的反应更激烈、更摇摆。在一些重视集体和顺从的文化里，适度的依赖是正常的，需要结合文化背景来看。",
+  origin:"可能和焦虑的气质有关，也和过度保护或专制的养育方式有关，独立的尝试很少被鼓励。",
+  help:"认知行为治疗、自信训练和问题解决训练都有效，目标是一步一步积累“我自己也可以”的经验。",
+  prev:"社区调查中约 0.5% 到 0.6%。",
+  lit:"这条脉络发光，说明你可能很需要别人的支持和确认。可以想一想：你是喜欢和人在一起，还是害怕一个人？",
+  tries:["每天做一个小决定，不问任何人，事后看看结果其实还不错。","练习说一次小小的“不”，观察关系并没有因此破裂。","一个人的时候给自己安排一件喜欢的事，慢慢积累“一个人也可以”的体验。"]},
+ ocpd:{tag:"只要一切井然有序，我就是安全的。",
+  inner:"对细节、规则和标准要求很高，事情不完美就放不下。休息会带来罪恶感，控制感是安全感的主要来源。",
+  outer:"在别人眼里认真、可靠、有原则，也可能固执、死板、难以合作，对自己和别人都很苛刻。",
+  belief:"只要出一点差错，一切都会失控。",
+  light:"可靠、严谨、有责任心，追求卓越，在需要精确和坚持的工作里非常出色。",
+  confuse:"它和强迫症（OCD）是两回事：强迫症有侵入性的强迫思维和仪式动作，本人通常觉得痛苦、想摆脱；强迫型人格的人往往认为自己的标准是对的。它和自闭症谱系的刻板也有相似之处，但出发点不同。",
+  origin:"可能和气质有关，也和严格、控制、重视表现的家庭环境有关。",
+  help:"认知行为治疗和图式治疗可以帮助松动“必须完美”的规则，练习容忍不确定和“足够好”。",
+  prev:"最常见的人格障碍之一，社区调查中约 2% 到 8%。",
+  lit:"这条脉络发光，说明控制和完美可能是你安全感的来源。值得问问自己：这些标准是在帮你，还是在困住你？",
+  tries:["有意识地交一份“八十分”的作品，看看真正的后果是什么。","把休息排进日程，当成任务的一部分，而不是奖励。","想坚持自己的做法时，先问一句：别人的方式真的会带来损失吗？"]},
+ asd:{tag:"这个世界的社交规则，像是用另一种语言写成的。",
+  inner:"别人似乎天生就懂的社交暗号，需要靠观察和推理才能理解。对某些事物有深沉而持久的热爱，对声音、光线或触感可能格外敏感。可预测的环境让人安心，突然的变化会带来很大的压力。",
+  outer:"在别人眼里可能直接、真诚、专注，有时显得不合群、不会看场合，或者对某个领域投入得异乎寻常。",
+  belief:"我需要很努力，才能像别人那样自然地相处。",
+  light:"深度专注、系统化的思维、注重细节、诚实直接，对热爱的领域有惊人的知识和投入。",
+  confuse:"这是神经发育特质，不是人格障碍，必须从童年早期就存在。很多女性和高能力的人擅长社交伪装，往往到成年才被识别。它和社交焦虑、分裂样、回避型可能有相似的表面，但出发点不同。它也经常和 ADHD、焦虑同时出现。",
+  origin:"主要由遗传决定，遗传度的研究估计在 80% 左右，和养育方式无关。",
+  help:"目标不是“治愈”或者变得“正常”，而是理解自己的运作方式，减少不必要的痛苦：调整感官环境，为社交留出恢复时间，识别和预防“自闭倦怠”，需要时寻求学业、职业和生活上的支持。神经多样性的视角正在被越来越多的人接受。",
+  prev:"约占人口的 1% 到 2%。男性被诊断的比例更高，但女性被认为长期被低估。",
+  lit:"这条脉络发光，说明你在社交理解、兴趣或感官上，可能有一些与众不同的特点。正式评估需要童年的信息，如果可以，问问父母你小时候是什么样子。",
+  tries:["记下哪些环境让你特别累，比如嘈杂、强光、人多，试着为自己减少这些消耗。","社交之后给自己留出独处恢复的时间，不要把“累”当成自己的问题。","如果你有强烈的特殊兴趣，把它当成力量而不是怪癖，它可能正是你最擅长的领域。"]},
+ adhd:{tag:"我的注意力有它自己的意志。",
+  inner:"脑子里同时开着很多扇窗，想法一个接一个。明明想做的事就是启动不了，感兴趣的事又能投入到忘了时间。时间感比较模糊，“等一下”很容易变成好几个小时。",
+  outer:"在别人眼里可能散漫、健忘、拖延、话多、冲动，也常常是那个有创意、有活力、反应很快的人。",
+  belief:"我明明想做好，可就是做不到，大家都觉得我不够努力。",
+  light:"好奇、有创造力、精力充沛，危机中反应快，对感兴趣的事能进入超级专注的状态。",
+  confuse:"焦虑、抑郁、睡眠不足、长期压力都会让注意力变差，但它们不是从童年就有的。ADHD 常伴随情绪失调，容易和边缘型混淆。女性更多表现为注意缺陷型，安静地走神，所以常常被忽视。",
+  origin:"高度遗传，遗传度估计在 70% 到 80%，和大脑里多巴胺等神经递质的调节方式有关，不是“懒”，也不是“不自律”。",
+  help:"药物有充分的研究支持，包括哌甲酯这样的兴奋剂类，以及托莫西汀这样的非兴奋剂类，需要医生评估后使用。外部化工具也很有效：把提醒、计时器、清单放在眼前，把大任务拆成足够小的第一步。认知行为治疗和 ADHD 教练对成人也有帮助。",
+  prev:"儿童约 5% 到 7%，成人约 2.5%。",
+  lit:"这条脉络发光，说明注意力和冲动的调节可能是你日常的挑战。正式诊断要求这些特点在十二岁以前就已经存在。",
+  tries:["把任务拆到“五分钟就能开始”的大小，先启动，别的以后再说。","用外部工具代替记忆：提醒、日历、贴在眼前的清单。","找一个“陪你一起做事”的人，身边有人在，往往更容易专注。"]}
+};
+
+/* five trait domains, after the DSM-5 Section III alternative model */
+const DOMAINS = [
+ {zh:"负性情感",en:"Negative Affectivity",keys:[["bpd",0],["bpd",5],["bpd",7],["dpd",2],["dpd",5],["dpd",7],["avpd",3],["avpd",4],["avpd",5],["ppd",5],["ocpd",7]],
+  desc:"容易体验到强烈的负面情绪，比如焦虑、愤怒、羞耻、害怕分离，情绪起伏也比较大。",
+  high:"你比一般人更容易感受到强烈的情绪，尤其是焦虑、愤怒或对分离的恐惧。这让你的感受很深，也让你更容易被情绪淹没。"},
+ {zh:"疏离",en:"Detachment",keys:[["szpd",0],["szpd",1],["szpd",3],["szpd",4],["szpd",6],["avpd",0],["avpd",2],["stpd",7],["ppd",0],["ppd",1]],
+  desc:"回避社交和亲密，情感表达受限，较少从人际关系里获得快乐。",
+  high:"你倾向于和人保持距离，可能是因为从关系里得到的快乐有限，也可能是因为害怕而先退后。"},
+ {zh:"对抗",en:"Antagonism",keys:[["npd",0],["npd",3],["npd",4],["npd",5],["npd",6],["npd",8],["aspd",1],["aspd",6],["hpd",0],["hpd",3]],
+  desc:"以自我为中心，需要被关注和钦佩，较少顾及别人的感受和权利。",
+  high:"你对被关注、被欣赏的需要比较强，有时会更多地从自己的角度出发。"},
+ {zh:"脱抑制",en:"Disinhibition",keys:[["aspd",2],["aspd",4],["aspd",5],["bpd",3],["adhd",1],["adhd",3],["adhd",4],["adhd",7],["adhd",15]],
+  desc:"倾向于即时满足，冲动、容易分心，不太受计划和后果的约束。",
+  high:"你更容易跟着当下的冲动和兴趣走，计划和自我约束对你来说比较费力。"},
+ {zh:"精神质",en:"Psychoticism",keys:[["stpd",0],["stpd",1],["stpd",2],["stpd",3],["stpd",6],["bpd",8]],
+  desc:"有不寻常的信念、知觉和思维方式，和大多数人的现实感有些距离。",
+  high:"你有一些不寻常的信念、感知或思维方式，想象力丰富，有时也会和别人的现实感产生距离。"}
+];
+
+const CLUSTER_TXT = {
+ A:"你的晶体在 A 群更亮。这一群的共同点是和他人之间的距离：或者因为不信任，或者因为不需要，或者因为感知世界的方式与众不同。",
+ B:"你的晶体在 B 群更亮。这一群的共同点是情绪和关系的强度：感受来得猛烈，关系起伏很大，自我价值容易被外界牵动。",
+ C:"你的晶体在 C 群更亮。这一群的共同点是焦虑：害怕被评价、害怕被丢下、害怕失控，于是用回避、依附或控制来保护自己。",
+ N:"你的晶体在神经发育特质这一侧更亮。这部分和“人格”不同，它描述的是大脑从小就有的运作方式，比如注意力、感官和社交信息的处理。"
+};
+
+const COMBOS = [
+ ["bpd","adhd","情绪失调和冲动在两者里都很常见，ADHD 的情绪起伏常被误认为边缘型，反过来也一样。一个区分的线索是：边缘型的情绪多由关系和被抛弃的恐惧触发，ADHD 的起伏更多来自挫败、无聊和冲动本身。两者也可能同时存在。"],
+ ["asd","adhd","这两种特质经常一起出现。DSM-5 之前不允许同时诊断，现在已经允许。很多人的体验是：一边渴望秩序和可预测，一边又被注意力推着四处跑。"],
+ ["asd","szpd","两者都可能表现为少与人来往。区别在于原因：自闭特质更多是社交理解和感官上的差异，并伴随强烈的兴趣；分裂样更多是真的不太需要关系。"],
+ ["asd","avpd","两者都可能回避社交。可以问问自己：我躲开人群，是因为看不懂、太累，还是因为害怕被评价？前者更接近自闭特质，后者更接近回避型。长期因为社交受挫，两者也可能叠在一起。"],
+ ["asd","stpd","社交上的古怪和少友在两者里都有，分裂型还多了猜疑、牵连观念和不寻常的信念。"],
+ ["asd","ocpd","两者都偏好规则和固定的方式。自闭特质的刻板更多来自对可预测性的需要和感官调节，强迫型人格来自对完美和控制的追求。"],
+ ["ocpd","adhd","看上去相反，其实很常见：用严格的规则和清单去补偿注意力的混乱，完美主义有时是 ADHD 的一层“补偿铠甲”。"],
+ ["avpd","dpd","两者都在 C 群的焦虑核心里：一个怕被评价而躲开，一个怕被丢下而抓紧。共同的底色是“我不够好”。"],
+ ["bpd","npd","两者都有不稳定的自我价值：被认可时飘得很高，被冷落时跌得很深。"],
+ ["bpd","dpd","共同点是对被抛弃的恐惧。依赖型用顺从去留住人，边缘型的反应更激烈、更摇摆。"],
+ ["bpd","avpd","一边渴望亲密，一边害怕被拒绝，很容易陷入“靠近，又推开”的循环。"],
+ ["hpd","npd","两者都需要被看见：表演型要的是关注，自恋型要的是钦佩。"],
+ ["bpd","hpd","两者的情绪都来得快、表达强烈。边缘型的底层是对被抛弃的恐惧，表演型的底层是对被忽视的不安。"],
+ ["ppd","stpd","猜疑在两者里都有，分裂型还伴随知觉和思维上的不寻常体验。"],
+ ["npd","aspd","两者共享“对抗”这一维度：共情不足、以自己为中心。区别在于自恋型更需要被钦佩，反社会型更漠视规则。"],
+ ["szpd","avpd","两者都和人保持距离，但一个是不太需要，一个是很想要却不敢。"]
+];
+
 /* flatten */
 const ITEMS = {};
 MODULES.forEach(m=>{
@@ -589,12 +858,12 @@ function scoreModule(m){
     if(short&&!m.core.includes(ci))return null;
     const vals=m.items.filter(id=>ITEMS[id].ci===ci&&ITEMS[id].supp===undefined).map(id=>S.ans[id]).filter(v=>v!==undefined);
     const mean=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
-    return {label:c[0],mean,hit:mean>=2.5,half:mean>=1.75&&mean<2.5,vals};
+    return {ci,label:c[0],mean,hit:mean>=2.5,half:mean>=1.75&&mean<2.5,vals};
   }).filter(Boolean);
   const supp=(m.supp||[]).map((s,si)=>({label:s[0],v:S.ans[`${m.id}.s${si}`]}));
   const hits=crits.filter(c=>c.hit).length;
   const pct=crits.reduce((a,c)=>a+c.mean,0)/(crits.length*4);
-  let state="low",ruleText="";
+  let state="low",ruleText="";const extra={};
   if(short){
     const n=crits.length;
     state=(hits>=Math.ceil(n*2/3)&&pct>=.6)?"high":(pct>=.45||(hits>=1&&pct>=.35))?"mid":"low";
@@ -604,15 +873,17 @@ function scoreModule(m){
   if(m.rule==="asd"){
     const a=crits.slice(0,3).filter(c=>c.hit).length,b=crits.slice(3).filter(c=>c.hit).length;
     state=(a===3&&b>=2)?"high":((a>=2&&b>=1)||pct>=.5)?"mid":"low";
+    Object.assign(extra,{a,b});
     ruleText=`社交沟通 ${a} / 3 条，重复与刻板 ${b} / 4 条。DSM-5 要求社交沟通三条全部符合，并且重复与刻板至少两条。`;
-    return {m,crits,supp,hits,pct,state,ruleText,sub:`社交沟通 ${a}/3，刻板重复 ${b}/4`};
+    return {m,crits,supp,hits,pct,state,ruleText,sub:`社交沟通 ${a}/3，刻板重复 ${b}/4`,...extra};
   }
   if(m.rule==="adhd"){
     const ia=crits.slice(0,9).filter(c=>c.hit).length,hi=crits.slice(9).filter(c=>c.hit).length;
     state=(ia>=5||hi>=5)?"high":(ia>=3||hi>=3||pct>=.5)?"mid":"low";
     let type="";if(state==="high")type=ia>=5&&hi>=5?"，呈混合表现":ia>=5?"，以注意缺陷为主":"，以多动冲动为主";
+    Object.assign(extra,{ia,hi,type});
     ruleText=`注意缺陷 ${ia} / 9 条，多动冲动 ${hi} / 9 条${type}。成人只需任一方面符合五条以上。`;
-    return {m,crits,supp,hits,pct,state,ruleText,sub:`注意缺陷 ${ia}/9，多动冲动 ${hi}/9`};
+    return {m,crits,supp,hits,pct,state,ruleText,sub:`注意缺陷 ${ia}/9，多动冲动 ${hi}/9`,...extra};
   }
   state=hits>=m.need?"high":(hits>=m.need-2||pct>=.5)?"mid":"low";
   ruleText=`符合 ${hits} / ${m.th} 条。DSM-5 的诊断线是 ${m.need} 条。`;
@@ -803,14 +1074,126 @@ function renderResult(){
         <span class="mod-sub"><b class="st-${r.state}">${stTxt}</b>，${r.sub}</span>
         <span class="strand" aria-hidden="true">${pearls}</span>
       </button>
-      <div class="mod-body" id="body-${m.id}"><p class="desc">${m.desc}</p><p class="rule">${r.ruleText}</p><ul class="crit">${list}</ul></div>
+      <div class="mod-body" id="body-${m.id}">
+        <div class="ana">${analyze(r)}</div>
+        <p class="mh">逐条来看</p><p class="rule">${r.ruleText}</p><ul class="crit">${list}</ul>
+        <p class="mh">关于这种模式</p><p class="desc">${m.desc}</p>
+        ${r.state!=="low"?`<p class="mh">可以试试</p><ul class="tries">${INTRO[m.id].tries.map(t=>`<li>${t}</li>`).join("")}</ul>`:""}
+        <button type="button" class="ghost to-atlas" data-id="${m.id}">阅读${m.zh}的完整介绍</button>
+      </div>
     </div>`;
   }).join("");
+  $("mods").querySelectorAll(".to-atlas").forEach(b=>b.onclick=()=>openAtlas(b.dataset.id));
+  renderProfile(R);
   $("mods").querySelectorAll(".mod-head").forEach(h=>h.onclick=()=>{
     const box=h.parentElement,o=!box.classList.contains("open");box.classList.toggle("open",o);h.setAttribute("aria-expanded",o);
   });
   window.__R=R;
 }
+/* ---- deeper analysis ---- */
+const q=l=>`“${l.replace(/^[AB]\d /,"").replace(/^(注意缺陷|多动冲动)：/,"")}”`;
+function analyze(r){
+  const m=r.m,short=S.ver==="short",P=Math.round(r.pct*100),out=[];
+  const lit=r.crits.filter(c=>c.hit),half=r.crits.filter(c=>c.half);
+  const top=[...r.crits].sort((a,b)=>b.mean-a.mean)[0];
+  if(short){
+    const n=r.crits.length;
+    out.push(r.state==="high"?`简化版问了${m.zh}里最核心的 ${n} 条标准，你有 ${r.hits} 条回答了“比较像我”或“非常像我”，整体强度 ${P}%，这种倾向在你身上比较明显。`
+      :r.state==="mid"?`简化版问了${m.zh}里最核心的 ${n} 条标准，你有 ${r.hits} 条明确符合，整体强度 ${P}%，有一定的倾向，但不算突出。`
+      :`简化版问了${m.zh}里最核心的 ${n} 条标准，整体强度 ${P}%，这条脉络在你身上比较微弱。`);
+  }else if(m.rule==="asd"){
+    out.push(r.state==="high"?`社交沟通的三条你全部符合，重复与刻板的四条里符合了 ${r.b} 条，达到了 DSM-5 描述的模式。这说明在你的自我描述里，自闭特质相当明显；不过正式判断还需要确认它们从童年早期就已存在。`
+      :r.state==="mid"?`社交沟通符合 ${r.a} / 3 条，重复与刻板符合 ${r.b} / 4 条，整体强度 ${P}%。部分特点比较明显，但没有完全达到 DSM-5 的要求：社交三条全部符合，加上刻板至少两条。`
+      :`社交沟通符合 ${r.a} / 3 条，重复与刻板符合 ${r.b} / 4 条，整体强度 ${P}%，自闭特质在你身上比较微弱。`);
+    if(r.state!=="low"&&r.a<r.b)out.push("你在“重复与刻板”这一侧比“社交沟通”更亮。强烈的兴趣和对固定方式的偏好，单独出现时也可能只是你的个性，不一定指向自闭谱系。");
+    if(r.state!=="low"&&r.a>r.b)out.push("你在“社交沟通”这一侧比“重复与刻板”更亮。社交上的吃力也可能来自焦虑、缺乏练习或者长期的被排斥，值得和其他几条脉络对照着看。");
+  }else if(m.rule==="adhd"){
+    out.push(r.state==="high"?`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条${r.type}，达到了成人的筛查线（任一方面五条）。`
+      :r.state==="mid"?`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条，整体强度 ${P}%，接近成人的筛查线（任一方面五条），但没有达到。`
+      :`注意缺陷符合 ${r.ia} / 9 条，多动冲动符合 ${r.hi} / 9 条，整体强度 ${P}%，这条脉络在你身上比较微弱。`);
+  }else{
+    out.push(r.state==="high"?`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，达到了 DSM-5 的诊断线（${m.need} 条），整体强度 ${P}%。在你的自我描述里，这种模式相当突出。不过问卷只是起点，是否构成“障碍”，还取决于它是不是长期、普遍，并且给你带来了明显的痛苦或损害。`
+      :r.state==="mid"?`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，离诊断线（${m.need} 条）还差 ${Math.max(1,m.need-r.hits)} 条，整体强度 ${P}%。它没有达到筛查线，但已经是你身上比较明显的一部分。`
+      :`在${m.zh}的 ${m.th} 条标准里，你符合了 ${r.hits} 条，整体强度 ${P}%，这条脉络在你身上比较微弱。`);
+  }
+  let p2="";
+  if(lit.length)p2+=`亮起的是：${lit.map(c=>q(c.label)).join("、")}。`;
+  if(half.length)p2+=`${lit.length?"另外，":""}${half.map(c=>q(c.label)).join("、")}处在“有时像我”和“比较像我”之间，也可以留意。`;
+  if(!lit.length&&!half.length&&top&&top.mean>=1.5)p2+=`相对最强的一条是${q(top.label)}。`;
+  if(p2)out.push(p2);
+  if(r.state!=="low")out.push(INTRO[m.id].lit);
+  // supplementary items
+  const sv=i=>r.supp[i]&&r.supp[i].v;
+  if(m.id==="asd"&&sv(0)>=3)out.push("你在“社交伪装”这一条上回答很像你。很多有自闭特质的人，尤其是女性，会通过观察和模仿来融入，代价是长期的疲惫。如果这条很像你，社交那几题的回答可能低估了你的真实情况。");
+  if(m.id==="adhd"&&sv(0)>=3)out.push("你也提到了对感兴趣的事会极度专注。这不在诊断标准里，却是很多 ADHD 人熟悉的体验：问题不是注意力不够，而是它不听自己调度。");
+  if(m.id==="adhd"&&r.state!=="low"&&sv(1)!==undefined)out.push(sv(1)>=3?"你认为这些特点在十二岁以前就已经存在，这符合 ADHD 对起病时间的要求。":sv(1)<=1?"你认为这些特点在十二岁以前并不明显。ADHD 要求童年起病；成年后才出现的注意力问题，更常和焦虑、抑郁、睡眠或压力有关。":"你不太确定这些特点是不是从小就有。可以问问父母或者翻翻小时候的成绩单、老师评语。");
+  if(m.id==="aspd"&&r.state==="high")out.push("请注意，正式诊断还要求十五岁以前就有品行障碍的表现。如果你小时候并没有这些行为，这些条目更可能反映的是冲动或冒险的倾向。");
+  return out.map((t,i)=>`<p class="${i>1?"soft":""}">${t}</p>`).join("");
+}
+function renderProfile(R){
+  const tested=R.filter(r=>!r.none);
+  // clusters
+  const cl=Object.keys(CLUSTERS).map(k=>{const rs=tested.filter(r=>r.m.cluster===k);return {k,n:rs.length,v:rs.length?rs.reduce((a,r)=>a+r.pct,0)/rs.length:null}});
+  const ok=cl.filter(c=>c.v!=null),topC=ok.slice().sort((a,b)=>b.v-a.v)[0];
+  const spread=ok.length>1?topC.v-Math.min(...ok.map(c=>c.v)):1;
+  let ctext=ok.length<2?"这次只测了一个分群，没法比较不同分群之间的强弱。":
+    spread<.08?"四个区域的亮度比较接近，没有哪一群特别突出。这通常说明你的特点比较分散，而不是集中在某一种风格上。":CLUSTER_TXT[topC.k];
+  const allLow=tested.every(r=>r.state==="low");
+  if(allLow)ctext+=" 不过整体来看，所有脉络都比较微弱，这里的“更亮”只是相对而言。";
+  $("clusters").innerHTML=`<h3>四个分群</h3><div class="cgrid">${cl.map(c=>`<div class="cstat ${topC&&c.k===topC.k&&spread>=.08&&ok.length>1?"top":""}"><b>${c.v==null?"—":Math.round(c.v*100)}${c.v==null?"":"<small>%</small>"}</b><span>${{A:"A 群<br>古怪疏离",B:"B 群<br>情绪戏剧",C:"C 群<br>焦虑恐惧",N:"神经发育<br>特质"}[c.k]}</span></div>`).join("")}</div><p>${ctext}</p>`;
+  // domains
+  const byMod=Object.fromEntries(tested.map(r=>[r.m.id,r]));
+  const minN=S.ver==="short"?2:3;
+  const ds=DOMAINS.map(d=>{
+    const vals=d.keys.map(([mid,ci])=>{const r=byMod[mid];if(!r)return null;const c=r.crits.find(x=>x.ci===ci);return c?c.mean:null}).filter(v=>v!=null);
+    return {...d,n:vals.length,v:vals.length>=minN?vals.reduce((a,b)=>a+b,0)/vals.length/4:null};
+  });
+  const shown=ds.filter(d=>d.v!=null),topD=shown.slice().sort((a,b)=>b.v-a.v)[0];
+  const lvl=v=>v>=.6?"偏高":v>=.4?"中等":"偏低";
+  $("domains").innerHTML=`<h3>五个特质维度</h3>
+    <p>DSM-5 第三部分提出了一个“人格障碍替代模型”，不再把人分进类别，而是用五个特质维度来描述。${topD&&topD.v>=.4?`在这五个维度里，你最高的是“${topD.zh}”。${topD.high}`:"你在五个维度上都不算高。"}</p>
+    <ul class="doms">${ds.map(d=>d.v==null?`<li class="na"><div class="dh"><b>${d.zh}<span class="latin">${d.en}</span></b><em>这次的题目不够推算</em></div><p>${d.desc}</p></li>`
+      :`<li><div class="dh"><b>${d.zh}<span class="latin">${d.en}</span></b><em>${Math.round(d.v*100)}%，${lvl(d.v)}</em></div><div class="dbar"><span style="width:${(d.v*100).toFixed(0)}%"></span></div><p>${d.desc}</p></li>`).join("")}</ul>
+    <p class="dnote">这里根据你在相关条目上的回答做了近似的推算，只是一个参考视角，不是该模型的正式量表。</p>`;
+  // combos
+  const lit=new Set(tested.filter(r=>r.state!=="low").map(r=>r.m.id));
+  const w=id=>byMod[id].pct+(byMod[id].state==="high"?1:0);
+  const hits=COMBOS.filter(([a,b])=>lit.has(a)&&lit.has(b)).sort((x,y)=>(w(y[0])+w(y[1]))-(w(x[0])+w(x[1]))).slice(0,4);
+  $("combo-sect").style.display=hits.length?"":"none";
+  $("combos").innerHTML=hits.map(([a,b,t])=>`<div class="glass combo"><h3>${MOD[a].zh}<i>×</i>${MOD[b].zh}</h3><p>${t}</p></div>`).join("");
+}
+
+/* ---- atlas ---- */
+let atlasFrom="s-home";
+function renderAtlas(){
+  $("atlas").innerHTML=Object.entries(CLUSTERS).map(([k,[name,sub,en]])=>`<div class="a-group"><h2><span>${name}，${sub}</span><span class="latin">${en}</span></h2><div class="a-list">${
+    MODULES.filter(m=>m.cluster===k).map(m=>{const I=INTRO[m.id];return `<article class="glass art" id="art-${m.id}">
+      <button type="button" class="art-head" aria-expanded="false"><span class="art-name">${m.zh}<span class="latin">${m.en}</span></span><span class="art-tag">${I.tag}</span><span class="art-more">点开阅读</span></button>
+      <div class="art-body">
+        <p class="belief"><small>内心深处的那句话</small>“${I.belief}”</p>
+        <h4>它是什么</h4><p>${m.desc}</p>
+        <h4>从里面看</h4><p>${I.inner}</p>
+        <h4>从外面看</h4><p>${I.outer}</p>
+        <h4>它也有光</h4><p>${I.light}</p>
+        <h4>容易混淆的</h4><p>${I.confuse}</p>
+        <h4>可能的来源</h4><p>${I.origin}</p>
+        <h4>怎样会变好</h4><p>${I.help}</p>
+        <h4>有多常见</h4><p>${I.prev}</p>
+        <h4>DSM-5 的标准</h4><p>${m.rule==="asd"?"社交沟通三条全部符合，加上重复与刻板四条中至少两条，并且从童年早期就存在。":m.rule==="adhd"?"注意缺陷九条或多动冲动九条中，成人至少五条（儿童六条），十二岁以前出现，并且在两个以上的场合存在。":`以下 ${m.th} 条中至少符合 ${m.need} 条。`}</p>
+        <ul class="tries">${m.crit.map(c=>`<li>${c[0]}</li>`).join("")}</ul>
+      </div></article>`}).join("")}</div></div>`).join("");
+  $("atlas").querySelectorAll(".art-head").forEach(h=>h.onclick=()=>{const a=h.parentElement,o=!a.classList.contains("open");a.classList.toggle("open",o);h.setAttribute("aria-expanded",o)});
+}
+let atlasY=0;
+function openAtlas(id){
+  atlasFrom=document.querySelector(".screen.on").id;atlasY=scrollY;
+  show("s-atlas");
+  if(id){const a=$("art-"+id);a.classList.add("open");a.querySelector(".art-head").setAttribute("aria-expanded",true);setTimeout(()=>a.scrollIntoView({block:"start",behavior:"smooth"}),30)}
+}
+$("atlas-from-home").onclick=()=>openAtlas();
+$("atlas-from-res").onclick=()=>openAtlas();
+$("atlas-back").onclick=()=>{show(atlasFrom);scrollTo({top:atlasY})};
+
 function ansText(c){
   if(c.vals.length===1)return SCALE[c.vals[0]];
   return c.vals.map(v=>SCALE[v]).join("／");
@@ -828,6 +1211,7 @@ $("review").onclick=()=>{S.done=false;S.idx=0;save();startQuiz()};
 $("restart").onclick=()=>{wipe();S={ver:"full",sel:MODULES.map(m=>m.id),order:[],ans:{},idx:0,done:false};$("resume").classList.remove("on");renderHome();show("s-home")};
 let tt;function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("on"),1800)}
 
+renderAtlas();
 stars();addEventListener("resize",()=>{clearTimeout(window.__rs);window.__rs=setTimeout(stars,200)});
 renderHome();
 </script>
