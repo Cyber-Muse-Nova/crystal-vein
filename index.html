@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="人格障碍自测（晶脉）：十种人格模式与两种神经发育特质的自评问卷，每道题对应一条 DSM-5 诊断标准。">
+<meta name="theme-color" content="#0A0515">
+<title>人格障碍自测 · 晶脉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;500;600&display=swap">
+<style>
+/* Concept: one transparent crystal with twelve facets, one per pattern. Answers thread light into its veins.
+   Layout: a single centred column floating in deep space; the crystal is the only loud element. */
+:root{
+  --void:#0A0515;
+  --void-2:#140a26;
+  --rose:#FF70B8;
+  --lav:#C060FF;
+  --cyan:#60D0FF;
+  --gold:#FFD0A0;
+  --plat:#E8E0F0;
+  --pearl:#F8F0FF;
+  --mist:#b4a8d2;
+  --faint:#76699a;
+  --glass:rgba(232,224,240,.045);
+  --glass-hi:rgba(232,224,240,.085);
+  --edge:rgba(200,170,255,.17);
+  --edge-soft:rgba(200,170,255,.09);
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --latin:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--void);-webkit-text-size-adjust:100%}
+body{
+  min-height:100vh;background:var(--void);color:var(--plat);
+  font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.8;
+  overflow-x:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+
+/* deep space */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60vmax 45vmax at 82% -8%, rgba(192,96,255,.20), transparent 62%),
+    radial-gradient(55vmax 40vmax at -10% 38%, rgba(255,112,184,.12), transparent 60%),
+    radial-gradient(70vmax 50vmax at 60% 115%, rgba(96,208,255,.10), transparent 60%),
+    linear-gradient(180deg,#0A0515 0%,#0d0720 55%,#0A0515 100%);
+}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%}
+
+main{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:max(28px,env(safe-area-inset-top)) 20px 80px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* type */
+.latin{font-family:var(--latin);font-style:italic;font-weight:400;letter-spacing:.01em}
+h1,h2,h3{font-family:var(--serif);font-weight:500;color:var(--pearl)}
+p{color:var(--mist)}
+.lead{font-family:var(--serif);font-weight:300;color:var(--plat);font-size:19px;line-height:1.85}
+
+/* glass */
+.glass{
+  position:relative;background:var(--glass);border:1px solid var(--edge);border-radius:22px;
+  -webkit-backdrop-filter:blur(14px) saturate(130%);backdrop-filter:blur(14px) saturate(130%);
+}
+.glass::before{ /* nacre edge sheen */
+  content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,112,184,.45),rgba(192,96,255,.15) 35%,rgba(96,208,255,.0) 60%,rgba(255,208,160,.30));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 28px;border-radius:999px;font-weight:500;font-size:16px;letter-spacing:.04em;
+  color:#1a0b22;background:linear-gradient(120deg,#ffd6ec 0%,#ffa6d4 38%,#d79bff 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.25) inset,0 10px 40px -12px rgba(255,112,184,.7);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.35) inset,0 14px 50px -12px rgba(255,112,184,.85)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ghost{
+  display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:999px;
+  border:1px solid var(--edge);color:var(--plat);font-size:15px;background:rgba(232,224,240,.03);
+  transition:background .2s ease,border-color .2s ease;
+}
+.ghost:hover{background:var(--glass-hi);border-color:rgba(200,170,255,.32)}
+.link{color:var(--mist);font-size:14px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(180,168,210,.4)}
+.link:hover{color:var(--plat)}
+
+/* ---------- landing ---------- */
+.hero{text-align:center;padding-top:8px}
+.hero-crystal{width:min(100%,430px);margin:0 auto -14px;display:block}
+.title{font-size:clamp(42px,11.5vw,84px);line-height:1.1;font-weight:300;letter-spacing:.08em;margin-right:-.08em;text-wrap:balance;
+  background:linear-gradient(180deg,#fff7fd 10%,#f2c8ff 55%,#9fd9ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 28px rgba(192,96,255,.35))}
+.title-en{display:flex;justify-content:center;align-items:baseline;gap:12px;font-size:21px;color:var(--mist);margin-top:14px}
+.title-en .brand{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:.3em;margin-right:-.3em;color:#e9c8ff}
+.hero .lead{max-width:30em;margin:30px auto 0;text-wrap:balance}
+.intro{margin-top:44px;padding:28px 26px}
+.intro p+p{margin-top:14px}
+.intro strong{color:var(--plat);font-weight:500}
+
+.picker{margin-top:28px;padding:26px 24px 22px}
+.ver-title{font-size:21px}
+.vers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 30px}
+.ver{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:16px 16px 15px;border-radius:16px;text-align:left;
+  border:1px solid var(--edge-soft);background:rgba(232,224,240,.025);transition:all .2s ease}
+.ver b{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--plat)}
+.ver .ver-n{font-size:13.5px;color:var(--mist)}
+.ver small{margin-top:6px;font-size:13px;line-height:1.65;color:var(--faint)}
+.ver[aria-checked="true"]{border-color:rgba(255,112,184,.45);background:linear-gradient(160deg,rgba(255,112,184,.10),rgba(192,96,255,.06));box-shadow:0 0 30px -10px rgba(255,112,184,.5)}
+.ver[aria-checked="true"] b{color:var(--pearl)}
+.ver[aria-checked="true"] .ver-n{color:#ffb3d9}
+@media (max-width:420px){.vers{grid-template-columns:minmax(0,1fr)}}
+.picker-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.picker-head h2{font-size:21px}
+.group{margin-top:22px}
+.group-name{font-size:14px;color:var(--faint);display:flex;gap:10px;align-items:baseline}
+.group-name .latin{font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 15px 0 12px;border-radius:999px;
+  border:1px solid var(--edge-soft);background:rgba(232,224,240,.025);color:var(--faint);font-size:14.5px;
+  transition:all .2s ease;
+}
+.chip i{width:9px;height:9px;border-radius:50%;border:1px solid var(--faint);transition:all .2s ease}
+.chip[aria-pressed="true"]{color:var(--pearl);border-color:rgba(255,112,184,.38);background:rgba(255,112,184,.07)}
+.chip[aria-pressed="true"] i{border-color:transparent;background:radial-gradient(circle at 35% 30%,#fff,#ffc4e3 45%,#ff70b8);box-shadow:0 0 10px rgba(255,112,184,.9)}
+.picker-foot{margin-top:24px;padding-top:20px;border-top:1px solid var(--edge-soft);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.meta{font-size:14px;color:var(--faint)}
+.resume{display:none;flex-direction:column;align-items:center;gap:10px}
+.resume.on{display:flex}
+
+.fine{margin-top:34px;text-align:center;font-size:13px;color:var(--faint);line-height:1.9}
+
+/* ---------- quiz ---------- */
+.qtop{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.qtop .mini{width:58px;height:58px;flex:none}
+.qprog{flex:1}
+.qcount{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mist)}
+.qcount b{font-weight:500;color:var(--pearl);font-variant-numeric:tabular-nums}
+.cable{position:relative;height:2px;margin-top:10px;border-radius:2px;background:rgba(200,170,255,.14)}
+.cable span{position:absolute;inset:0 auto 0 0;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--lav),var(--rose));box-shadow:0 0 12px rgba(255,112,184,.6);transition:width .35s ease}
+.cable span::after{content:"";position:absolute;right:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffd2ea 50%,#ff70b8);box-shadow:0 0 14px #ff70b8}
+
+.qcard{padding:34px 28px 26px;min-height:420px;display:flex;flex-direction:column}
+.qtext{font-family:var(--serif);font-weight:400;font-size:clamp(19px,4.8vw,22px);line-height:1.75;color:var(--pearl);min-height:4.2em}
+.opts{position:relative;margin-top:28px;display:flex;flex-direction:column;gap:6px}
+.opts::before{ /* the data cable threading the pearls */
+  content:"";position:absolute;left:26px;top:24px;bottom:24px;width:1px;
+  background:linear-gradient(180deg,rgba(96,208,255,.5),rgba(192,96,255,.5),rgba(255,112,184,.7));
+}
+.opt{
+  position:relative;display:flex;align-items:center;gap:18px;width:100%;min-height:50px;padding:6px 16px 6px 12px;
+  border-radius:14px;text-align:left;font-size:16px;color:var(--mist);transition:background .18s ease,color .18s ease;
+}
+.opt:hover{background:rgba(232,224,240,.05);color:var(--plat)}
+.pearl{position:relative;z-index:1;flex:none;width:30px;display:grid;place-items:center}
+.pearl i{display:block;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#e9defa 45%,#9f8fc7);opacity:.55;transition:all .2s ease}
+.opt[aria-checked="true"]{background:rgba(255,112,184,.08);color:var(--pearl)}
+.opt[aria-checked="true"] .pearl i{opacity:1;background:radial-gradient(circle at 35% 30%,#fff,#ffd2ea 45%,#ff70b8);box-shadow:0 0 0 4px rgba(255,112,184,.15),0 0 18px rgba(255,112,184,.9)}
+.qnav{margin-top:auto;padding-top:22px;display:flex;justify-content:space-between;align-items:center}
+.qhint{font-size:12.5px;color:var(--faint)}
+@media (hover:none){.qhint{display:none}}
+
+/* ---------- result ---------- */
+.res-hero{text-align:center}
+.res-hero h1{font-size:clamp(34px,9vw,46px);font-weight:300;letter-spacing:.08em;margin-top:6px}
+.res-crystal{width:100%;max-width:560px;margin:4px auto 0;display:block}
+.summary{max-width:31em;margin:6px auto 0}
+.legend{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;margin-top:20px;font-size:13px;color:var(--mist)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend em{font-style:normal}
+.legend i{width:8px;height:8px;border-radius:50%}
+
+.notice{margin-top:34px;padding:24px 24px;border-color:rgba(255,208,160,.35)}
+.notice h3{font-size:18px;color:var(--gold)}
+.notice p{margin-top:10px}
+.notice .tel{font-family:var(--serif);font-size:30px;color:var(--pearl);letter-spacing:.06em;margin-top:6px}
+
+.ctx{margin-top:34px;padding:24px}
+.ctx h3{font-size:18px}
+.vnote p{margin-top:8px}.vnote .ghost{margin-top:16px}
+.ctx ul{list-style:none;margin-top:10px}
+.ctx li{position:relative;padding-left:18px;color:var(--mist);margin-top:8px}
+.ctx li::before{content:"";position:absolute;left:0;top:.8em;width:6px;height:6px;border-radius:50%;background:var(--lav);box-shadow:0 0 8px var(--lav)}
+
+.sect{margin-top:52px}
+.sect>h2{font-size:24px;font-weight:500}
+.sect>p{margin-top:6px;font-size:14.5px}
+
+.mods{margin-top:18px;display:flex;flex-direction:column;gap:12px}
+.mod{padding:0;overflow:hidden}
+.mod-head{width:100%;display:grid;grid-template-columns:1fr auto;gap:6px 14px;padding:20px 22px 18px;text-align:left}
+.mod-name{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--pearl);line-height:1.4}
+.mod-name .latin{font-size:16px;color:var(--mist);margin-left:8px}
+.mod-pct{font-family:var(--latin);font-style:italic;font-size:26px;line-height:1;color:var(--plat);align-self:center;grid-row:span 2;font-variant-numeric:tabular-nums}
+.mod-pct small{font-size:14px;color:var(--faint)}
+.mod-sub{font-size:13.5px;color:var(--mist)}
+.mod-sub b{font-weight:500}
+.st-high{color:var(--rose)}.st-mid{color:var(--lav)}.st-low{color:var(--cyan)}
+.strand{grid-column:1/-1;display:flex;align-items:center;gap:0;margin-top:8px;height:16px;position:relative}
+.strand::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:linear-gradient(90deg,rgba(96,208,255,.35),rgba(192,96,255,.35),rgba(255,112,184,.35))}
+.strand i{position:relative;flex:1;display:grid;place-items:center}
+.strand i::after{content:"";width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d9cdee 50%,#7f71a8);opacity:.35}
+.strand i.on::after{opacity:1;width:11px;height:11px;background:radial-gradient(circle at 35% 30%,#fff,#ffd2ea 45%,#ff70b8);box-shadow:0 0 12px rgba(255,112,184,.95)}
+.strand i.half::after{opacity:.9;background:radial-gradient(circle at 35% 30%,#fff,#e6c8ff 45%,#a96bff);box-shadow:0 0 8px rgba(192,96,255,.7)}
+.mod-body{display:none;padding:0 22px 22px;border-top:1px solid var(--edge-soft)}
+.mod.open .mod-body{display:block}
+.mod-body .desc{margin-top:16px;font-size:15px}
+.mod-body .rule{margin-top:10px;font-size:13.5px;color:var(--faint)}
+.crit{list-style:none;margin-top:14px}
+.crit li{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-bottom:1px dashed rgba(200,170,255,.10);font-size:14.5px;color:var(--mist)}
+.crit li:last-child{border-bottom:0}
+.crit li.hit{color:var(--pearl)}
+.crit li .ans{font-size:13px;color:var(--faint);white-space:nowrap}
+.crit li.hit .ans{color:var(--rose)}
+.crit li.supp{color:var(--faint);font-style:normal}
+.chev{grid-column:1/-1;font-size:12.5px;color:var(--faint);margin-top:4px}
+.mod.untested{opacity:.55}
+
+.read{margin-top:18px;padding:26px 24px}
+.read ol{margin-top:4px;padding-left:1.3em;color:var(--mist)}
+.read li{margin-top:12px;padding-left:4px}
+.read li::marker{color:var(--lav);font-family:var(--latin);font-style:italic}
+.read strong{color:var(--plat);font-weight:500}
+
+.actions{margin-top:44px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:5;
+  padding:12px 20px;border-radius:999px;background:rgba(30,16,52,.92);border:1px solid var(--edge);color:var(--pearl);font-size:14px;transition:all .3s ease;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* crystal svg */
+.cx-label{font-family:var(--sans);font-size:12px;fill:var(--mist)}
+.cx-label.high{fill:#ffb3d9}
+.cx-label.mid{fill:#dcb3ff}
+.cx-label.none{fill:#5b4f80}
+.breathe{transform-origin:center;animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.025);opacity:1}}
+.vein{stroke-dasharray:1;stroke-dashoffset:0}
+.grow .vein{stroke-dashoffset:1;animation:grow 1.4s cubic-bezier(.3,.6,.2,1) forwards;animation-delay:var(--d)}
+.grow .tip{opacity:0;animation:fade .6s ease forwards;animation-delay:calc(var(--d) + 1.1s)}
+@keyframes grow{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+
+@media (min-width:640px){
+  main{padding-top:56px}
+  .intro,.picker{padding:32px 34px}
+  .qcard{padding:40px 40px 30px}
+  .mod-head{padding:22px 28px 20px}
+  .mod-body{padding:0 28px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .grow .vein{stroke-dashoffset:0}
+  .grow .tip{opacity:1}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<main>
+  <!-- landing -->
+  <section class="screen on" id="s-home" aria-labelledby="t-home">
+    <div class="hero">
+      <div id="hero-crystal"></div>
+      <h1 class="title" id="t-home">人格障碍自测</h1>
+      <span class="title-en"><span class="brand">晶脉</span><span class="latin">Crystal Vein</span></span>
+      <p class="lead">十种人格障碍，加上自闭症谱系和 ADHD 特质。<br>把自己放进一块透明的水晶里，看看哪些脉络在发光。</p>
+    </div>
+
+    <div class="glass intro">
+      <p>这是一份自评问卷，覆盖 DSM-5 中的<strong>十种人格障碍</strong>，以及<strong>自闭症谱系</strong>和 <strong>ADHD</strong> 两种神经发育特质。每一道题都对应诊断标准中的一条，结果会告诉你每一种模式里，你符合了哪几条、强度有多高。</p>
+      <p>请按你<strong>长期以来</strong>的样子作答：成年以后、大多数时候、在不同场合里的你，而不是最近几天的状态。题目会打乱顺序，作答时不显示它属于哪一类，以免先入为主。</p>
+      <p>有完整版和简化版两种。完整版逐条对照诊断标准，简化版只问每种模式最核心的几条，几分钟就能做完。</p>
+      <p>它不能给你诊断，但能帮你把模糊的“我是不是……”变成具体的、可以拿去和专业人士讨论的条目。</p>
+    </div>
+
+    <div class="glass picker">
+      <h2 class="ver-title">选择版本</h2>
+      <div class="vers" role="radiogroup" aria-label="选择版本">
+        <button type="button" class="ver" role="radio" data-v="full" aria-checked="true"><b>完整版</b><span class="ver-n" id="n-full"></span><small>每一条 DSM-5 标准都有对应的题目，可以逐条对照诊断线。</small></button>
+        <button type="button" class="ver" role="radio" data-v="short" aria-checked="false"><b>简化版</b><span class="ver-n" id="n-short"></span><small>每种模式只问最核心的几条，快速看出大致倾向。</small></button>
+      </div>
+      <div class="picker-head">
+        <h2>选择要照见的脉络</h2>
+        <button class="link" id="toggle-all" type="button">全部取消</button>
+      </div>
+      <div id="groups"></div>
+      <div class="picker-foot">
+        <button class="btn" id="start" type="button">开始作答</button>
+        <span class="meta" id="meta"></span>
+        <div class="resume" id="resume">
+          <button class="ghost" id="continue" type="button">继续上次的作答</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="fine">所有答案只保存在你自己的浏览器里，不会上传到任何地方。<br>如果你此刻有伤害自己的念头，请拨打全国统一心理援助热线 12356。</p>
+  </section>
+
+  <!-- quiz -->
+  <section class="screen" id="s-quiz" aria-label="作答">
+    <div class="qtop">
+      <div class="mini" id="mini-crystal" aria-hidden="true"></div>
+      <div class="qprog">
+        <div class="qcount"><span>第 <b id="qi">1</b> 题，共 <b id="qn">1</b> 题</span><button class="link" id="quit" type="button">暂停，回到首页</button></div>
+        <div class="cable"><span id="bar" style="width:0"></span></div>
+      </div>
+    </div>
+    <div class="glass qcard">
+      <p class="qtext" id="qtext" aria-live="polite"></p>
+      <div class="opts" id="opts" role="radiogroup" aria-labelledby="qtext"></div>
+      <div class="qnav">
+        <button class="ghost" id="prev" type="button">上一题</button>
+        <span class="qhint">可以用数字键 1 到 5 作答</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- result -->
+  <section class="screen" id="s-result" aria-labelledby="t-res">
+    <div class="res-hero">
+      <div id="res-crystal"></div>
+      <h1 id="t-res">你的晶体</h1>
+      <p class="lead summary" id="summary"></p>
+      <div class="legend">
+        <span><i style="background:var(--rose);box-shadow:0 0 8px var(--rose)"></i><em id="lg-h">达到筛查线</em></span>
+        <span><i style="background:var(--lav);box-shadow:0 0 8px var(--lav)"></i><em id="lg-m">接近筛查线</em></span>
+        <span><i style="background:var(--cyan);opacity:.6"></i>微弱</span>
+      </div>
+    </div>
+
+    <div id="vernote"></div>
+    <div id="crisis"></div>
+    <div id="context"></div>
+
+    <div class="sect">
+      <h2>十二条脉络</h2>
+      <p id="mods-note">先按筛查结果、再按强度排列。每一颗珍珠是一条诊断标准，亮起的是你回答“比较像我”或“非常像我”的那几条。点开可以看到每一条的具体内容。</p>
+      <div class="mods" id="mods"></div>
+    </div>
+
+    <div class="sect">
+      <h2>怎么读这份结果</h2>
+      <div class="glass read">
+        <ol>
+          <li><strong>这不是诊断。</strong>人格障碍要求一种模式是普遍的、长期的、缺乏弹性的，并且造成明显的痛苦或功能损害。这需要专业人员通过面谈和病史来判断，问卷只能提示方向。</li>
+          <li><strong>自评会有偏差。</strong>情绪低落时，人会高估自己的回避、依赖和不稳定；越习惯自我审视的人，往往报告得越多；而有些模式本人恰恰最难看见。</li>
+          <li><strong>几条脉络同时发光很常见。</strong>这些类别之间本来就高度重叠。多处亮起通常说明有一个共同的底层特质，比如情绪特别敏感，而不是“同时有好几种病”。</li>
+          <li><strong>人格在二十五岁前后仍在成形。</strong>很多特质会随着时间、关系和经历慢慢缓和，今天的晶体不是你永久的形状。</li>
+          <li><strong>自闭症谱系和 ADHD 不是人格障碍。</strong>它们是神经发育特质，必须从童年就存在。正式评估通常需要童年的信息，最好有父母的回忆或早年的资料。</li>
+          <li><strong>“筛查线”参照的是 DSM-5 的条目数</strong>，只是帮你看清分布，不是一条把人分成“正常”和“有病”的界线。</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>如果想要一个真正的答案</h2>
+      <div class="glass read">
+        <ol>
+          <li>可以去三甲医院的<strong>精神科或心理科</strong>，或者当地的<strong>精神卫生中心</strong>。人格相关的评估通常需要不止一次面谈。</li>
+          <li>成人的<strong>自闭症谱系和 ADHD 评估</strong>不是每家医院都做，去之前最好先打电话确认，有些地方需要预约专门的门诊。</li>
+          <li>去之前，把这份结果里亮起的条目，配上你生活中的具体例子写下来带去。这会比“我觉得我可能有点……”有用得多。</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="copy" type="button">复制结果摘要</button>
+      <button class="ghost" id="review" type="button">修改答案</button>
+      <button class="ghost" id="restart" type="button">重新作答</button>
+    </div>
+    <p class="fine">人格障碍自测，晶脉 Crystal Vein，Nova Crystal 美学，由 Nova 猫猫与 Claude 制作。<br>题目依据 DSM-5 诊断标准原创编写，仅供自我观察。</p>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ============ item bank ============
+   Every criterion paraphrases one DSM-5 criterion; items are original wording.
+   crit: [label, item, item?]   supp: extra items shown but not counted. */
+const MODULES = [
+ {id:"ppd",core:[0, 3, 4],cluster:"A",zh:"偏执型",abbr:"偏执",en:"Paranoid",th:7,need:4,
+  desc:"核心是对他人普遍的不信任和猜疑，倾向于把别人的动机解读成恶意。和真实受过伤害之后的合理警惕不同，它会在没有证据的时候也持续存在。和分裂型的区别是，这里没有明显的知觉异常或古怪的思维方式。",
+  crit:[
+   ["没有证据也怀疑别人在利用、欺骗或伤害自己","即使没有确切的证据，我也常常觉得别人在利用我、骗我，或者想害我。"],
+   ["反复怀疑朋友或同事是否忠诚可信","我经常反复琢磨朋友或同事到底是不是真心对我、值不值得信任。"],
+   ["不愿吐露心事，担心被拿来对付自己","我不太愿意把心事告诉别人，因为担心这些信息会被拿来对付我。"],
+   ["从普通言行中读出贬低或威胁","别人一句随口的话或一个普通的举动，我常常能从里面听出贬低或者威胁的意思。"],
+   ["长期记恨，难以原谅","被人伤害、冒犯或者轻视过，我会记很久，很难原谅。"],
+   ["觉得自己被攻击，并迅速愤怒反击","我常觉得自己的人格或名声受到了攻击，而且会马上愤怒地反击回去。"],
+   ["没有正当理由地怀疑伴侣不忠","在没有正当理由的情况下，我会反复怀疑伴侣是不是对我不忠。"]
+  ]},
+ {id:"szpd",core:[0, 1, 6],cluster:"A",zh:"分裂样",abbr:"分裂样",en:"Schizoid",th:7,need:4,
+  desc:"核心是对人际关系的疏离，以及情感表达的范围很窄。它和回避型最大的区别是：回避型渴望连接但害怕被拒绝，分裂样则是真的不太需要。它和自闭症谱系也有重叠，后者更强调社交理解上的困难和刻板的兴趣，并且从童年就存在。",
+  crit:[
+   ["不渴望也不享受亲密关系，包括家人","我并不渴望亲密关系，包括和家人亲近，也不太能从中感到享受。"],
+   ["几乎总是选择独自活动","如果可以选，我几乎总是选择一个人做事。"],
+   ["对与他人发生性关系兴趣很少","我对和另一个人发生性关系兴趣很少。"],
+   ["很少有活动能带来乐趣","能让我真正感到快乐的事情非常少。"],
+   ["除了直系亲属，几乎没有亲密朋友","除了直系亲属，我几乎没有可以说心里话的朋友。"],
+   ["对赞美和批评都无所谓","别人夸我也好，批评我也好，我基本都无所谓。"],
+   ["情感冷淡、疏离或平淡","别人常说我冷淡、疏离，或者情绪很平，看不出喜怒。"]
+  ]},
+ {id:"stpd",core:[0, 1, 2],cluster:"A",zh:"分裂型",abbr:"分裂型",en:"Schizotypal",th:9,need:5,
+  desc:"核心是在亲密关系中的强烈不适、认知或知觉上的扭曲，以及行为上的古怪。需要注意：对灵性、玄学、塔罗或宇宙的兴趣本身不等于分裂型，关键在于这些信念是否让你和现实脱节、影响到判断和生活。",
+  crit:[
+   ["觉得偶然事件在暗指自己","我常觉得一些偶然发生的事，比如路人的谈话、新闻、歌词，其实是在暗指我，或者对我有特别的含义。"],
+   ["影响行为的古怪信念或魔幻思维","我相信一些大多数人不信的东西，比如心灵感应、预知、意念能改变现实，而且这些信念影响着我的行为。"],
+   ["不寻常的知觉体验","我有过不寻常的感知体验，比如感觉有个看不见的存在在身边，或者听到有人轻声叫我的名字。"],
+   ["思维和言语古怪、模糊或过度抽象","别人有时说我说话很绕、很抽象、比喻太多，或者听不懂我到底想表达什么。"],
+   ["多疑或带有偏执色彩的想法","我常怀疑别人在背后议论我，或者对我怀有敌意。"],
+   ["情绪反应与场合不相称或很受限","我的情绪反应有时和场合不太匹配，别人会觉得有点奇怪。"],
+   ["举止、外表或习惯古怪","别人觉得我的举止、穿着或者生活习惯很古怪、很特立独行。"],
+   ["缺少亲密的朋友或知己","我身边几乎没有亲近的朋友，或者可以信赖的人。"],
+   ["社交焦虑不随熟悉而减轻，且与猜疑有关","和人相处时我很紧张，而且即使认识久了也放松不下来，主要是因为担心别人会对我不利。"]
+  ]},
+ {id:"aspd",core:[0, 1, 6],cluster:"B",zh:"反社会型",abbr:"反社会",en:"Antisocial",th:7,need:3,
+  desc:"核心是长期漠视和侵犯他人的权利。正式诊断要求年满十八岁，并且在十五岁以前就有品行障碍的证据，偶尔的冲动或叛逆不算。",
+  crit:[
+   ["多次做出可能被处罚的违法违规行为","我多次做过可能会被抓或被处罚的违法违规的事。"],
+   ["为私利或乐趣反复说谎、欺骗","为了自己的利益或者乐趣，我经常撒谎、用假身份或者骗人。"],
+   ["冲动，不提前计划","我做事经常很冲动，不考虑后果，也很少提前计划。"],
+   ["易激惹，有攻击性，多次打架","我脾气暴躁，曾经多次和人发生肢体冲突或动手。"],
+   ["鲁莽地不顾自己或他人安全","我会做一些不顾自己或者别人安全的危险事情。"],
+   ["一贯不负责任，如工作和债务","我经常不能坚持工作，或者欠了钱、答应别人的事情不去兑现。"],
+   ["伤害他人后缺乏懊悔","伤害了别人，或者拿了不属于我的东西，我通常不会觉得内疚，还会给自己找理由。"]
+  ]},
+ {id:"bpd",core:[0, 1, 4, 5],cluster:"B",zh:"边缘型",abbr:"边缘",en:"Borderline",th:9,need:5,
+  desc:"核心是人际关系、自我形象和情绪的不稳定，以及明显的冲动性。最深的恐惧是被抛弃。它也是预后最好的人格障碍之一：辩证行为疗法（DBT）等治疗有很强的证据支持，很多人的症状会随时间明显缓解。",
+  crit:[
+   ["拼命避免真实或想象中的被抛弃","一想到可能被抛弃，不管是真的还是我想象的，我都会非常慌，并且会拼命做一些事去阻止它发生。"],
+   ["关系强烈而不稳定，在理想化和贬低之间摇摆","我的亲密关系很强烈也很不稳定：我可能前一阵觉得对方完美无缺，后一阵又觉得对方一文不值。"],
+   ["自我形象或自我感明显而持续地不稳定","我对“我是谁”“我想要什么”的感受经常剧烈变化，自我形象很不稳定。"],
+   ["至少两方面的冲动自损行为","我在至少两个方面有冲动且可能伤害自己的行为，比如冲动地大额花钱、危险驾驶、暴饮暴食、物质滥用或者不安全的性行为。"],
+   ["反复的自杀念头、威胁、行为或自伤","我曾经反复出现自杀的念头、威胁或者行为，或者有过自伤的行为。"],
+   ["情绪快速而剧烈地波动","我的情绪变化非常快，强烈的烦躁、焦虑或者低落通常持续几个小时，很少超过几天。"],
+   ["长期的空虚感","我常常有一种挥之不去的空虚感。"],
+   ["不恰当的强烈愤怒，难以控制","我经常发很大的火，很难控制自己的愤怒，事后又会后悔。"],
+   ["压力下短暂的猜疑或解离","压力很大的时候，我会短暂地觉得别人要害我，或者觉得自己和周围的世界不真实，像隔着一层玻璃。"]
+  ]},
+ {id:"hpd",core:[0, 2, 5],cluster:"B",zh:"表演型",abbr:"表演",en:"Histrionic",th:8,need:5,
+  desc:"核心是过度的情绪化和寻求关注。外向、有表现力、喜欢被看见，本身完全不是问题；关键是是否“必须”成为焦点才能感到安全，以及情绪是否浮在表面、来去很快。",
+  crit:[
+   ["不是焦点时感到不舒服","如果我不是全场的焦点，我会觉得不舒服。"],
+   ["在不合适的场合带有挑逗或暧昧意味","和别人互动的时候，我常常会带一些暧昧或挑逗的意味，即使场合并不合适。"],
+   ["情绪转换快，表达偏浅","我的情绪来得快去得也快，别人有时会觉得我的情绪不够深。"],
+   ["经常用外表吸引注意","我会经常用自己的外表来吸引别人的注意。"],
+   ["说话印象化，缺少细节","我说话时喜欢用很强烈、很有感染力的词，但别人追问细节时，我往往说不清楚。"],
+   ["情绪表达戏剧化、夸张","别人说我的情绪表达很戏剧化、很夸张。"],
+   ["容易受他人或环境影响","我很容易被别人或者环境影响，改变自己的想法。"],
+   ["把关系看得比实际更亲密","我常觉得和某个人的关系已经很亲密了，后来却发现对方并不这么认为。"]
+  ]},
+ {id:"npd",core:[0, 3, 6],cluster:"B",zh:"自恋型",abbr:"自恋",en:"Narcissistic",th:9,need:5,
+  desc:"核心是夸大（在幻想或行为上）、需要被赞美、缺乏共情。很多时候，夸大的外壳下面是一个很脆弱、很需要被确认的自我。有远大的梦想不等于自恋；关键在于是否需要别人不断确认你的特别，以及你是否还能看见别人。",
+  crit:[
+   ["夸大自身的重要性","我觉得自己的才能和成就比别人认为的要重要得多，即使还没有相应的成就，我也期待被看作出众的人。"],
+   ["沉浸于无限成功、权力、才华、美貌或理想爱情的幻想","我经常沉浸在关于无限成功、权力、才华、美貌或者完美爱情的幻想里。"],
+   ["相信自己特别，只有特别的人才能理解自己","我相信自己是特别而独特的，只有同样特别或者地位高的人，才能真正理解我、配得上和我交往。"],
+   ["需要过多的欣赏和赞美","我需要很多的欣赏和赞美。"],
+   ["特权感","我觉得自己理应得到特殊对待，别人应该自动顺从我的期望。"],
+   ["在人际中利用他人","为了达到自己的目的，我会利用别人。"],
+   ["缺乏共情","别人的感受和需要，我通常不太能体会，或者不太愿意去在意。"],
+   ["常嫉妒他人，或认为他人嫉妒自己","我常常嫉妒别人，或者觉得别人在嫉妒我。"],
+   ["傲慢的态度或行为","别人觉得我傲慢、目中无人。"]
+  ]},
+ {id:"avpd",core:[1, 3, 5],cluster:"C",zh:"回避型",abbr:"回避",en:"Avoidant",th:7,need:4,
+  desc:"核心是社交上的抑制、强烈的不足感，以及对负面评价的极度敏感。想要连接，但更怕被拒绝，所以先把自己藏起来。它和社交焦虑障碍高度重叠。注意，“回避型依恋”是另一个概念，不等于回避型人格障碍。",
+  crit:[
+   ["因怕批评或拒绝，回避需要人际接触的工作和活动","因为害怕被批评、否定或者拒绝，我会回避需要和很多人打交道的工作或活动。"],
+   ["除非确定被喜欢，否则不愿与人交往","除非确定对方会喜欢我，否则我不愿意和人深入交往。"],
+   ["因怕羞辱，在亲密关系中拘谨","即使在亲密关系里，我也很拘谨，因为害怕被嘲笑或者丢脸。"],
+   ["社交中满脑子是被批评或被拒绝","在社交场合里，我满脑子都在担心被批评或者被拒绝。"],
+   ["新的人际情境中因不足感而受抑制","到了新的社交环境，我会因为觉得自己不够好而变得很拘束。"],
+   ["认为自己社交笨拙、没有吸引力、不如人","我觉得自己在社交上很笨拙、没有吸引力，或者不如别人。"],
+   ["因怕难堪而不愿冒险或尝试新事物","我很少尝试新事物或者冒险，因为担心可能会让自己难堪。"]
+  ]},
+ {id:"dpd",core:[0, 2, 5],cluster:"C",zh:"依赖型",abbr:"依赖",en:"Dependent",th:8,need:5,
+  desc:"核心是过度需要被照顾，并因此变得顺从、黏附，害怕分离。它和边缘型都怕失去关系，但依赖型更多是顺从和讨好，边缘型更多是剧烈的情绪和关系上的摇摆。",
+  crit:[
+   ["日常决定也需要大量建议和保证","做日常的小决定，我也需要别人给我很多建议和保证。"],
+   ["需要别人为生活的主要方面负责","我希望别人替我负责生活中大部分重要的事情。"],
+   ["怕失去支持而难以表达不同意见","我很难对别人说出不同意，因为害怕失去对方的支持或认可。"],
+   ["因缺乏自信难以独立开始做事","因为对自己的判断和能力没信心，我很难独立开始做一件事。"],
+   ["为获得照顾而过度付出，甚至做不愿做的事","为了得到别人的照顾和支持，我会做很多事，甚至自愿去做自己不喜欢的事。"],
+   ["独处时不安无助，担心照顾不好自己","一个人的时候，我会觉得不安和无助，担心自己照顾不好自己。"],
+   ["一段关系结束后急着找下一段","一段亲密关系结束以后，我会迫切地去找另一个人来照顾我、支持我。"],
+   ["不现实地担心被留下独自照顾自己","我经常不现实地担心，有一天会被丢下，只能自己照顾自己。"]
+  ]},
+ {id:"ocpd",core:[0, 1, 7],cluster:"C",zh:"强迫型",abbr:"强迫",en:"Obsessive-Compulsive",th:8,need:4,
+  desc:"核心是专注于秩序、完美和控制，并因此牺牲了灵活、开放和效率。它和强迫症（OCD）不同：强迫型人格通常没有侵入性的强迫思维和仪式动作，而且本人往往觉得自己的标准是对的。",
+  crit:[
+   ["过度专注细节、规则和顺序，忘了目的","我非常在意细节、规则、清单和顺序，以至于经常忘了做这件事本来的目的。"],
+   ["完美主义妨碍完成任务","因为要求太完美，我常常没办法把事情做完。"],
+   ["过度投入工作，挤掉休闲和友谊","我把绝大部分时间都投入在工作或者做事上，几乎没有休闲和交朋友的时间，而这并不是因为经济上的需要。"],
+   ["在道德和价值观上过度较真、缺乏变通","在道德、伦理和价值观的问题上，我非常较真，很难变通。"],
+   ["难以丢弃没用也没纪念意义的东西","即使是破旧、没用、也没有纪念意义的东西，我也很难扔掉。"],
+   ["除非按自己的方式，否则不愿交给别人","除非别人完全按照我的方式来做，否则我不愿意把事情交给别人。"],
+   ["对自己和他人都很吝啬，为未来囤钱","我对自己和别人花钱都很节省，觉得钱要存起来，以防将来发生灾难。"],
+   ["僵化而固执","别人觉得我很固执、很死板。"]
+  ]},
+ {id:"asd",core:[0, 1, 4, 5],cluster:"N",zh:"自闭症谱系特质",abbr:"自闭谱系",en:"Autism Spectrum",th:7,need:5,rule:"asd",
+  desc:"这是神经发育特质，不是人格障碍。核心是社交沟通上的差异，以及受限、重复的行为和兴趣，而且必须从童年早期就出现。很多女性和高能力的人非常擅长“伪装”，在人前模仿得很好，往往到成年才被识别出来。",
+  crit:[
+   ["A1 社交情感的互动困难","我不太擅长你来我往的闲聊，常常不知道什么时候该接话、什么时候该停。","别人向我倾诉情绪时，我常常不知道该怎么回应，或者回应得不太对。"],
+   ["A2 非语言沟通的困难","我很难读懂别人的表情、语气和肢体语言背后的意思。","有人说过我的表情、眼神交流或者语气有点奇怪、不太自然。"],
+   ["A3 建立和维持关系的困难","我很难理解交朋友、维持关系的那些“潜规则”。","根据不同场合调整自己的言行，对我来说很费力。"],
+   ["B1 刻板重复的动作、言语或摆放","我会反复做一些固定的动作或发出声音，比如摇晃、拍手、哼某个音，或者反复说某些词句。","我喜欢把东西按特定的方式排列，或者反复重复某个固定的流程。"],
+   ["B2 坚持同一性，依赖固定程序","计划被突然打乱，或者日常习惯被改变，会让我非常难受。","我坚持用固定的方式做事，比如走同一条路、吃同样的东西。"],
+   ["B3 强度或焦点异常的狭窄兴趣","我有一两个非常强烈、非常专注的兴趣，投入程度远远超过身边大多数人。","聊天时我很容易把话题带到自己的特殊兴趣上，而且能一直讲下去。"],
+   ["B4 感官输入过度或过低敏感","我对声音、光线、气味、材质或者触碰特别敏感，或者特别迟钝。","某些感官刺激会让我非常着迷，比如盯着光看、反复摸某种材质。"]
+  ],
+  supp:[["社交伪装","在人前，我会刻意模仿别人的社交方式，让自己看起来“正常”，事后会觉得特别累。"]]},
+ {id:"adhd",core:[1, 3, 4, 11, 13, 15],cluster:"N",zh:"ADHD 特质",abbr:"ADHD",en:"Attention-Deficit / Hyperactivity",th:18,need:5,rule:"adhd",
+  desc:"这是神经发育特质。核心是注意力调节上的困难，以及（或者）多动和冲动。它不是“注意力不够”，而是“注意力不听自己调度”：不感兴趣的事怎么都集中不了，感兴趣的事又可以专注到忘了时间。正式诊断要求十二岁前就出现，并且在两个以上的场合里存在。",
+  crit:[
+   ["注意缺陷：粗心，忽略细节","我做事时常常粗心，忽略细节而出错。"],
+   ["注意缺陷：难以持续注意","做不感兴趣的事情时，我很难长时间保持注意力，比如开会、读长篇的文件。"],
+   ["注意缺陷：别人说话时像没在听","别人直接对我说话时，我常常走神，看起来好像没在听。"],
+   ["注意缺陷：难以把事情做完","我经常开始一件事，然后很快失去专注，最后没有做完。"],
+   ["注意缺陷：组织和安排困难","我很难安排好任务和时间，东西和事情常常乱成一团，经常赶不上截止时间。"],
+   ["注意缺陷：回避需要持续动脑的任务","需要长时间动脑的任务，比如写报告、填表格，我会一拖再拖，或者干脆回避。"],
+   ["注意缺陷：经常弄丢东西","我经常弄丢东西，比如钥匙、钱包、手机、证件，或者忘了密码。"],
+   ["注意缺陷：容易分心","我很容易被外界的东西，或者自己脑子里突然冒出的想法打断。"],
+   ["注意缺陷：日常事务健忘","我经常忘记日常的事情，比如回消息、付账单、赴约。"],
+   ["多动冲动：手脚动个不停","坐着的时候，我常常手脚动个不停，或者在座位上扭来扭去。"],
+   ["多动冲动：该坐着时离开座位","在需要一直坐着的场合，我常常忍不住站起来走动。"],
+   ["多动冲动：内心躁动不安","我常常感到内心躁动，静不下来。"],
+   ["多动冲动：难以安静地休闲","我很难安安静静地做一件休闲的事。"],
+   ["多动冲动：停不下来，像被马达驱动","我总是停不下来，像被马达驱动一样，别人会觉得跟不上我。"],
+   ["多动冲动：话很多","我经常说话说得很多。"],
+   ["多动冲动：抢着回答","别人话还没说完，我就常常忍不住抢着回答或者接话。"],
+   ["多动冲动：难以等待","排队、等待轮到自己，对我来说很难熬。"],
+   ["多动冲动：打断或侵扰他人","我经常打断别人，或者不经允许就插手别人正在做的事。"]
+  ],
+  supp:[["超级专注","对感兴趣的事情，我会进入极度专注的状态，忘了时间，忘了吃饭。"],["十二岁前出现","上面这些注意力或者冲动方面的特点，在我十二岁以前就已经存在了。"]]}
+];
+const CONTEXT = [
+ ["g1","上面这些让我有共鸣的模式，在我的生活中已经持续了很多年，不只是最近这段时间。"],
+ ["g2","这些模式明显影响了我的学业、工作或者人际关系。"],
+ ["g3","这些模式让我自己感到痛苦。"],
+ ["g4","我最近正处在一段特别艰难的时期，比如失恋、失业、家庭冲突，或者情绪很低落。"]
+];
+const SCALE = ["完全不像我","不太像我","有时像我","比较像我","非常像我"];
+const CLUSTERS = {A:["A 群","古怪的、疏离的","Cluster A"],B:["B 群","戏剧化的、情绪化的","Cluster B"],C:["C 群","焦虑的、恐惧的","Cluster C"],N:["神经发育特质","不属于人格障碍","Neurodevelopmental"]};
+const COLOR = {high:"#FF70B8",mid:"#C060FF",low:"#60D0FF",prog:"#C060FF"};
+
+/* flatten */
+const ITEMS = {};
+MODULES.forEach(m=>{
+  m.items=[];
+  m.crit.forEach((c,ci)=>c.slice(1).forEach((t,ii)=>{const id=`${m.id}.${ci}.${ii}`;ITEMS[id]={id,m:m.id,ci,t};m.items.push(id)}));
+  (m.supp||[]).forEach((s,si)=>{const id=`${m.id}.s${si}`;ITEMS[id]={id,m:m.id,supp:si,t:s[1]};m.items.push(id)});
+  m.short=m.core.map(ci=>`${m.id}.${ci}.0`);
+});
+const itemsFor=(m,ver)=>ver==="short"?m.short:m.items;
+CONTEXT.forEach(([id,t])=>ITEMS[id]={id,m:"ctx",t});
+const MOD = Object.fromEntries(MODULES.map(m=>[m.id,m]));
+
+/* ============ state ============ */
+const KEY="crystal-vein-v1";
+let S = {ver:"full",sel:MODULES.map(m=>m.id),order:[],ans:{},idx:0,done:false};
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.order)return o}}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function wipe(){try{localStorage.removeItem(KEY)}catch(e){}}
+
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function buildOrder(sel,ver){
+  const pool=[];MODULES.filter(m=>sel.includes(m.id)).forEach(m=>pool.push(...itemsFor(m,ver)));
+  const r=rng(Date.now()&0xffffff);
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+  return pool.concat(CONTEXT.map(c=>c[0]));
+}
+
+/* ============ scoring ============ */
+function scoreModule(m){
+  if(!S.sel.includes(m.id))return {m,none:true};
+  const short=S.ver==="short";
+  const crits=m.crit.map((c,ci)=>{
+    if(short&&!m.core.includes(ci))return null;
+    const vals=m.items.filter(id=>ITEMS[id].ci===ci&&ITEMS[id].supp===undefined).map(id=>S.ans[id]).filter(v=>v!==undefined);
+    const mean=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+    return {label:c[0],mean,hit:mean>=2.5,half:mean>=1.75&&mean<2.5,vals};
+  }).filter(Boolean);
+  const supp=(m.supp||[]).map((s,si)=>({label:s[0],v:S.ans[`${m.id}.s${si}`]}));
+  const hits=crits.filter(c=>c.hit).length;
+  const pct=crits.reduce((a,c)=>a+c.mean,0)/(crits.length*4);
+  let state="low",ruleText="";
+  if(short){
+    const n=crits.length;
+    state=(hits>=Math.ceil(n*2/3)&&pct>=.6)?"high":(pct>=.45||(hits>=1&&pct>=.35))?"mid":"low";
+    ruleText=`简化版只问了这种模式里最核心的 ${n} 条标准，只能看出大致倾向，不能对照 DSM-5 的诊断线。想看完整的对照，请做完整版。`;
+    return {m,crits,supp,hits,pct,state,ruleText,sub:`核心条目符合 ${hits} / ${n} 条`};
+  }
+  if(m.rule==="asd"){
+    const a=crits.slice(0,3).filter(c=>c.hit).length,b=crits.slice(3).filter(c=>c.hit).length;
+    state=(a===3&&b>=2)?"high":((a>=2&&b>=1)||pct>=.5)?"mid":"low";
+    ruleText=`社交沟通 ${a} / 3 条，重复与刻板 ${b} / 4 条。DSM-5 要求社交沟通三条全部符合，并且重复与刻板至少两条。`;
+    return {m,crits,supp,hits,pct,state,ruleText,sub:`社交沟通 ${a}/3，刻板重复 ${b}/4`};
+  }
+  if(m.rule==="adhd"){
+    const ia=crits.slice(0,9).filter(c=>c.hit).length,hi=crits.slice(9).filter(c=>c.hit).length;
+    state=(ia>=5||hi>=5)?"high":(ia>=3||hi>=3||pct>=.5)?"mid":"low";
+    let type="";if(state==="high")type=ia>=5&&hi>=5?"，呈混合表现":ia>=5?"，以注意缺陷为主":"，以多动冲动为主";
+    ruleText=`注意缺陷 ${ia} / 9 条，多动冲动 ${hi} / 9 条${type}。成人只需任一方面符合五条以上。`;
+    return {m,crits,supp,hits,pct,state,ruleText,sub:`注意缺陷 ${ia}/9，多动冲动 ${hi}/9`};
+  }
+  state=hits>=m.need?"high":(hits>=m.need-2||pct>=.5)?"mid":"low";
+  ruleText=`符合 ${hits} / ${m.th} 条。DSM-5 的诊断线是 ${m.need} 条。`;
+  if(m.id==="aspd")ruleText+=" 另外还要求十五岁前已有品行障碍。";
+  return {m,crits,supp,hits,pct,state,ruleText,sub:`符合 ${hits} / ${m.th} 条，筛查线 ${m.need} 条`};
+}
+
+/* ============ crystal ============ */
+function crystal(vals,{size="hero",grow=false,labels=false}={}){
+  const pt=(a,r,w)=>[Math.cos(a)*r-Math.sin(a)*w,Math.sin(a)*r+Math.cos(a)*w].map(n=>n.toFixed(1)).join(",");
+  const vb=labels?"-238 -222 476 444":"-190 -190 380 380";
+  let defs=`<filter id="glow-${size}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <radialGradient id="core-${size}"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ffc2e2"/><stop offset=".7" stop-color="#ff70b8" stop-opacity=".55"/><stop offset="1" stop-color="#c060ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="halo-${size}"><stop offset="0" stop-color="#c060ff" stop-opacity=".22"/><stop offset=".6" stop-color="#ff70b8" stop-opacity=".06"/><stop offset="1" stop-color="#0A0515" stop-opacity="0"/></radialGradient>`;
+  let body=`<circle r="186" fill="url(#halo-${size})"/>`;
+  let veins="",lab="";
+  vals.forEach((d,i)=>{
+    const a=(i*30-90)*Math.PI/180;
+    const col=d.state?COLOR[d.state]:"#8f7fc0";
+    const v=d.v==null?0:Math.max(0,Math.min(1,d.v));
+    const op=d.v==null?.0:(.07+.4*v)*(d.state==="low"?.6:1);
+    defs+=`<linearGradient id="f-${size}-${i}" gradientUnits="userSpaceOnUse" x1="${pt(a,28,0).split(",")[0]}" y1="${pt(a,28,0).split(",")[1]}" x2="${pt(a,176,0).split(",")[0]}" y2="${pt(a,176,0).split(",")[1]}"><stop offset="0" stop-color="${col}" stop-opacity="${(op*1.3).toFixed(3)}"/><stop offset=".7" stop-color="${col}" stop-opacity="${(op*.55).toFixed(3)}"/><stop offset="1" stop-color="#F8F0FF" stop-opacity="${(op*.35+.02).toFixed(3)}"/></linearGradient>`;
+    body+=`<polygon points="${pt(a,28,-7)} ${pt(a,122,-21)} ${pt(a,176,0)} ${pt(a,122,21)} ${pt(a,28,7)}" fill="url(#f-${size}-${i})" stroke="${d.v==null?"rgba(143,127,192,.22)":"rgba(232,224,240,.30)"}" stroke-width=".8" ${d.v==null?'stroke-dasharray="3 4"':''}/>`;
+    body+=`<polyline points="${pt(a,40,-4)} ${pt(a,118,-13)} ${pt(a,160,0)}" fill="none" stroke="rgba(248,240,255,.16)" stroke-width=".6"/>`;
+    if(v>0.02){
+      const L=146*v,s=(i%2?1:-1)*5;
+      const p0=pt(a,30,0),pc=pt(a,30+L*.5,s),p1=pt(a,30+L,0);
+      const bq=pt(a,30+L*.55,0),bc=pt(a,30+L*.68,-s*2.4),be=pt(a,30+L*.78,-s*3.2);
+      const bq2=pt(a,30+L*.3,0),be2=pt(a,30+L*.44,s*2.2);
+      const dl=grow?`style="--d:${(.15+i*.09).toFixed(2)}s"`:"";
+      veins+=`<g ${dl} filter="url(#glow-${size})" stroke="${col}" fill="none" stroke-linecap="round" opacity="${d.state==="low"?.6:1}">
+        <path class="vein" pathLength="1" d="M${p0} Q${pc} ${p1}" stroke-width="1.6"/>
+        <path class="vein" pathLength="1" d="M${bq} Q${bc} ${be}" stroke-width=".9"/>
+        <path class="vein" pathLength="1" d="M${bq2} L${be2}" stroke-width=".7"/>
+        <circle class="tip" cx="${p1.split(",")[0]}" cy="${p1.split(",")[1]}" r="${(2.2+2*v).toFixed(1)}" fill="#F8F0FF" stroke="none"/>
+      </g>`;
+    }
+    if(labels){
+      const r=197,x=Math.cos(a)*r,y=Math.sin(a)*r+4;
+      const anchor=Math.abs(x)<10?"middle":x>0?"start":"end";
+      lab+=`<text class="cx-label ${d.v==null?"none":d.state}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anchor}">${d.label}</text>`;
+    }
+  });
+  const cls=size==="hero"?"breathe":"";
+  return `<svg viewBox="${vb}" class="${size==="hero"?"hero-crystal":size==="res"?"res-crystal":""} ${grow?"grow":""}" role="img" aria-label="十二面水晶，每一面代表一种模式">
+    <defs>${defs}</defs><g class="${cls}">${body}${veins}<circle r="22" fill="url(#core-${size})"/><circle r="5" fill="#fff" opacity=".9"/></g>${lab}</svg>`;
+}
+
+/* ============ starfield (drawn once, no ambient motion) ============ */
+function stars(){
+  const c=document.getElementById("stars"),x=c.getContext("2d"),dpr=Math.min(devicePixelRatio||1,2);
+  const w=innerWidth,h=innerHeight;c.width=w*dpr;c.height=h*dpr;x.scale(dpr,dpr);
+  const r=rng(77),n=Math.round(w*h/2600);
+  for(let i=0;i<n;i++){
+    const px=r()*w,py=r()*h,s=r()**3*1.5+.25,t=r();
+    const col=t<.15?"255,170,215":t<.3?"170,215,255":t<.38?"255,215,170":"240,232,255";
+    x.fillStyle=`rgba(${col},${(.25+r()*.6).toFixed(2)})`;x.beginPath();x.arc(px,py,s,0,7);x.fill();
+    if(s>1.3){const g=x.createRadialGradient(px,py,0,px,py,s*3.5);g.addColorStop(0,`rgba(${col},.22)`);g.addColorStop(1,`rgba(${col},0)`);x.fillStyle=g;x.beginPath();x.arc(px,py,s*3.5,0,7);x.fill()}
+  }
+}
+
+/* ============ screens ============ */
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));scrollTo({top:0})}
+
+function renderHome(){
+  const demo=[.35,.2,.45,.15,.7,.4,.55,.3,.25,.5,.65,.6];
+  $("hero-crystal").innerHTML=crystal(MODULES.map((m,i)=>({v:demo[i],state:i%3===1?"low":i%4===0?"high":"mid"})),{size:"hero"});
+  let html="";
+  Object.entries(CLUSTERS).forEach(([k,[name,sub,en]])=>{
+    html+=`<div class="group"><div class="group-name"><span>${name}，${sub}</span><span class="latin">${en}</span></div><div class="chips">`;
+    MODULES.filter(m=>m.cluster===k).forEach(m=>{html+=`<button type="button" class="chip" data-id="${m.id}" aria-pressed="${S.sel.includes(m.id)}"><i></i>${m.zh}</button>`});
+    html+=`</div></div>`;
+  });
+  $("groups").innerHTML=html;
+  $("groups").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.id;S.sel=S.sel.includes(id)?S.sel.filter(x=>x!==id):[...S.sel,id];
+    b.setAttribute("aria-pressed",S.sel.includes(id));updateMeta();
+  });
+  updateMeta();
+  const saved=load();
+  if(saved&&Object.keys(saved.ans).length&&!saved.done){
+    $("resume").classList.add("on");
+    $("continue").textContent=`继续上次的${saved.ver==="short"?"简化版":"完整版"}（已答 ${Object.keys(saved.ans).length} / ${saved.order.length} 题）`;
+    $("continue").onclick=()=>{S=saved;startQuiz(false)};
+  }else if(saved&&saved.done){
+    $("resume").classList.add("on");
+    $("continue").textContent=`查看上次${saved.ver==="short"?"简化版":"完整版"}的结果`;
+    $("continue").onclick=()=>{S=saved;renderResult()};
+  }
+}
+function countFor(ver){const n=MODULES.filter(m=>S.sel.includes(m.id)).reduce((a,m)=>a+itemsFor(m,ver).length,0);return n?n+CONTEXT.length:0}
+const mins=t=>Math.max(2,Math.round(t*7/60));
+function updateMeta(){
+  ["full","short"].forEach(v=>{const t=countFor(v);$("n-"+v).textContent=t?`${t} 题，约 ${mins(t)} 分钟`:"未选择模式"});
+  document.querySelectorAll(".ver").forEach(b=>b.setAttribute("aria-checked",b.dataset.v===S.ver));
+  const n=countFor(S.ver);
+  const total=n;
+  $("meta").textContent=total?`${S.ver==="short"?"简化版":"完整版"}，共 ${total} 题，大约需要 ${mins(total)} 分钟。中途可以暂停，进度会自动保存。`:"至少选择一种模式。";
+  $("start").disabled=!n;
+  $("toggle-all").textContent=S.sel.length===MODULES.length?"全部取消":"全部选择";
+}
+document.querySelectorAll(".ver").forEach(b=>b.onclick=()=>{S.ver=b.dataset.v;updateMeta()});
+$("toggle-all").onclick=()=>{S.sel=S.sel.length===MODULES.length?[]:MODULES.map(m=>m.id);renderHome()};
+$("start").onclick=()=>{S={ver:S.ver,sel:S.sel.slice(),order:buildOrder(S.sel,S.ver),ans:{},idx:0,done:false};save();startQuiz(true)};
+
+function startQuiz(){show("s-quiz");renderQ()}
+function renderQ(){
+  const id=S.order[S.idx],it=ITEMS[id],N=S.order.length;
+  $("qi").textContent=S.idx+1;$("qn").textContent=N;
+  $("bar").style.width=`${(Object.keys(S.ans).length/N*100).toFixed(1)}%`;
+  $("qtext").textContent=it.t;
+  const cur=S.ans[id];
+  $("opts").innerHTML=SCALE.map((s,v)=>`<button type="button" class="opt" role="radio" aria-checked="${cur===v}" data-v="${v}"><span class="pearl"><i style="width:${10+v*2.5}px;height:${10+v*2.5}px"></i></span>${s}</button>`).join("");
+  $("opts").querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.v));
+  $("prev").disabled=S.idx===0;$("prev").style.visibility=S.idx===0?"hidden":"visible";
+  // mini crystal shows how much of each facet has been answered, never the scores
+  $("mini-crystal").innerHTML=crystal(MODULES.map(m=>{
+    if(!S.sel.includes(m.id))return {v:null};
+    const its=itemsFor(m,S.ver),done=its.filter(x=>S.ans[x]!==undefined).length;return {v:done/its.length,state:"prog"};
+  }),{size:"mini"});
+}
+let lock=false;
+function answer(v){
+  if(lock)return;lock=true;
+  const id=S.order[S.idx];S.ans[id]=v;save();
+  $("opts").querySelectorAll(".opt").forEach(b=>b.setAttribute("aria-checked",+b.dataset.v===v));
+  setTimeout(()=>{lock=false;
+    if(S.idx<S.order.length-1){S.idx++;save();renderQ()}
+    else{const miss=S.order.findIndex(x=>S.ans[x]===undefined);if(miss>=0){S.idx=miss;renderQ()}else{S.done=true;save();renderResult()}}
+  },220);
+}
+$("prev").onclick=()=>{if(S.idx>0){S.idx--;save();renderQ()}};
+$("quit").onclick=()=>{save();renderHome();show("s-home")};
+document.addEventListener("keydown",e=>{
+  if(!$("s-quiz").classList.contains("on"))return;
+  if(e.key>="1"&&e.key<="5")answer(+e.key-1);
+  if(e.key==="ArrowLeft"||e.key==="Backspace"){e.preventDefault();$("prev").click()}
+});
+
+/* ============ result ============ */
+function renderResult(){
+  show("s-result");
+  const R=MODULES.map(scoreModule);
+  $("res-crystal").innerHTML=crystal(R.map(r=>({v:r.none?null:r.pct,state:r.none?null:r.state,label:r.m.abbr})),{size:"res",grow:true,labels:true});
+  const tested=R.filter(r=>!r.none).sort((a,b)=>(b.state==="high")-(a.state==="high")||(b.state==="mid")-(a.state==="mid")||b.pct-a.pct);
+  const bright=tested.filter(r=>r.state!=="low").slice(0,3);
+  $("summary").textContent=bright.length
+    ?`发光最亮的脉络是${bright.map(r=>`“${r.m.zh}”`).join("、")}。${S.ver==="short"?"简化版只能看出倾向，想确认可以做完整版。":tested.filter(r=>r.state==="high").length?"其中有达到筛查线的部分，值得认真看一看。":"它们接近筛查线，但都没有达到。"}`
+    :"所有脉络都比较微弱，没有哪一种模式接近筛查线。";
+
+  $("lg-h").textContent=S.ver==="short"?"倾向明显":"达到筛查线";$("lg-m").textContent=S.ver==="short"?"有一定倾向":"接近筛查线";
+  $("vernote").innerHTML=S.ver==="short"?`<div class="glass ctx vnote"><h3>这是简化版的结果</h3><p>每种模式只问了最核心的几条，适合快速看看大致倾向。想逐条对照 DSM-5 的诊断线，可以再做一次完整版，这次选择的模式会保留。</p><button type="button" class="ghost" id="to-full">做完整版</button></div>`:"";
+  if($("to-full"))$("to-full").onclick=()=>{const sel=S.sel.slice();S={ver:"full",sel,order:buildOrder(sel,"full"),ans:{},idx:0,done:false};save();startQuiz()};
+  // crisis
+  const sh=S.ans["bpd.4.0"];
+  $("crisis").innerHTML=(sh!==undefined&&sh>=2)?`<div class="glass notice"><h3>先说一件比结果更重要的事</h3>
+    <p>你在“反复的自杀念头或自伤”这一条上，没有选“完全不像我”。如果你此刻正有伤害自己的念头，请现在就联系可以接住你的人。</p>
+    <p class="tel">12356</p><p>全国统一心理援助热线，各省都已开通。遇到紧急危险，请拨打 120 或 110。</p>
+    <p>你也可以把这句话发给一个信任的人：“我现在状态不太好，可以陪我一下吗？”</p></div>`:"";
+
+  // context
+  const g=k=>S.ans[k]??0,ctx=[];
+  if(tested.some(r=>r.state!=="low")){
+    ctx.push(g("g1")>=3?"你认为这些模式已经持续了很多年，这符合人格特质“长期稳定”的特点，结果有一定参考价值。":g("g1")<=1?"你认为这些模式主要是最近才出现的。人格障碍描述的是长期模式，近期的变化更可能和处境或情绪状态有关。":"你不太确定这些模式持续了多久。可以回想一下十八岁前后的自己，再和现在对比。");
+    if(g("g2")<=1&&g("g3")<=1)ctx.push("这些模式没有给你带来明显的痛苦或损害。没有痛苦和损害，就不构成诊断意义上的“障碍”，它们更接近你的风格。");
+    else if(g("g2")>=3||g("g3")>=3)ctx.push("这些模式已经让你痛苦，或者影响了你的生活。这本身就是值得找专业人士谈一谈的理由，不需要等到“确诊”。");
+  }
+  if(g("g4")>=3)ctx.push("你正处在一段艰难的时期。这会让很多条目的回答偏高，尤其是情绪不稳定、回避和依赖相关的部分。过几个月状态平稳一些时再测一次，对比会更准确。");
+  $("context").innerHTML=ctx.length?`<div class="glass ctx"><h3>结合你的背景来看</h3><ul>${ctx.map(t=>`<li>${t}</li>`).join("")}</ul></div>`:"";
+
+  // modules
+  $("mods-note").textContent=S.ver==="short"
+    ?"先按结果、再按强度排列。简化版里，每一颗珍珠是一条被问到的核心标准，亮起的是你回答“比较像我”或“非常像我”的那几条。点开可以看到具体内容。"
+    :"先按筛查结果、再按强度排列。每一颗珍珠是一条诊断标准，亮起的是你回答“比较像我”或“非常像我”的那几条。点开可以看到每一条的具体内容。";
+  const order=[...tested,...R.filter(r=>r.none)];
+  $("mods").innerHTML=order.map((r,k)=>{
+    const m=r.m;
+    if(r.none)return `<div class="glass mod untested"><div class="mod-head"><span class="mod-name">${m.zh}<span class="latin">${m.en}</span></span><span class="mod-pct">—</span><span class="mod-sub">这次没有测</span></div></div>`;
+    const stTxt=(S.ver==="short"?{high:"倾向明显",mid:"有一定倾向",low:"微弱"}:{high:"达到筛查线",mid:"接近筛查线",low:"微弱"})[r.state];
+    const pearls=r.crits.map(c=>`<i class="${c.hit?"on":c.half?"half":""}"></i>`).join("");
+    const list=r.crits.map(c=>`<li class="${c.hit?"hit":""}"><span>${c.label}</span><span class="ans">${ansText(c)}</span></li>`).join("")
+      +r.supp.filter(s=>s.v!==undefined).map(s=>`<li class="supp"><span>补充：${s.label}（不计入）</span><span class="ans">${SCALE[s.v]}</span></li>`).join("");
+    return `<div class="glass mod" id="mod-${m.id}">
+      <button type="button" class="mod-head" aria-expanded="false" aria-controls="body-${m.id}">
+        <span class="mod-name">${m.zh}<span class="latin">${m.en}</span></span>
+        <span class="mod-pct">${Math.round(r.pct*100)}<small>%</small></span>
+        <span class="mod-sub"><b class="st-${r.state}">${stTxt}</b>，${r.sub}</span>
+        <span class="strand" aria-hidden="true">${pearls}</span>
+      </button>
+      <div class="mod-body" id="body-${m.id}"><p class="desc">${m.desc}</p><p class="rule">${r.ruleText}</p><ul class="crit">${list}</ul></div>
+    </div>`;
+  }).join("");
+  $("mods").querySelectorAll(".mod-head").forEach(h=>h.onclick=()=>{
+    const box=h.parentElement,o=!box.classList.contains("open");box.classList.toggle("open",o);h.setAttribute("aria-expanded",o);
+  });
+  window.__R=R;
+}
+function ansText(c){
+  if(c.vals.length===1)return SCALE[c.vals[0]];
+  return c.vals.map(v=>SCALE[v]).join("／");
+}
+$("copy").onclick=()=>{
+  const R=window.__R||[];
+  const st=S.ver==="short"?{high:"倾向明显",mid:"有一定倾向",low:"微弱"}:{high:"达到筛查线",mid:"接近筛查线",low:"微弱"};
+  const lines=R.filter(r=>!r.none).sort((a,b)=>b.pct-a.pct).map(r=>`${r.m.zh}：强度 ${Math.round(r.pct*100)}%，${r.sub}（${st[r.state]}）`);
+  const txt=`人格障碍自测${S.ver==="short"?"简化版":"完整版"}结果（晶脉 Crystal Vein）\n\n${lines.join("\n")}\n\n这是依据 DSM-5 标准编写的自评问卷，不是诊断。\n${location.href.split("#")[0]}`;
+  const done=()=>toast("已复制到剪贴板");
+  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(done,()=>fallbackCopy(txt));else fallbackCopy(txt);
+};
+function fallbackCopy(t){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");toast("已复制到剪贴板")}catch(e){toast("复制失败，请手动截图")}a.remove()}
+$("review").onclick=()=>{S.done=false;S.idx=0;save();startQuiz()};
+$("restart").onclick=()=>{wipe();S={ver:"full",sel:MODULES.map(m=>m.id),order:[],ans:{},idx:0,done:false};$("resume").classList.remove("on");renderHome();show("s-home")};
+let tt;function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("on"),1800)}
+
+stars();addEventListener("resize",()=>{clearTimeout(window.__rs);window.__rs=setTimeout(stars,200)});
+renderHome();
+</script>
+</body>
+</html>
